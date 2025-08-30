@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ROB Assessment Tool Configuration",
+  "type": "object",
+  "properties": {
+    "paths": {
+      "type": "object",
+      "properties": {
+        "input_folder": { "type": "string" },
+        "output_folder": { "type": "string" },
+        "checkpoint_file": { "type": "string" },
+        "temp_folder": { "type": "string" },
+        "llm_pricing_config": { "type": "string" }
+      }
+    },
+    "processing": {
+      "type": "object",
+      "properties": {
+        "llm_output_mode": { "type": "string", "enum": ["json", "table"] },
+        "eval_optional_items": { "type": "boolean" },
+        "max_text_length": { "type": "integer" },
+        "start_index": { "type": "integer" },
+        "batch_size": { "type": "integer" },
+        "enable_resume": { "type": "boolean" }
+      }
+    },
+    "parallel": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "max_workers": { "type": "integer", "minimum": 1 },
+        "parallel_workers": { "type": "integer", "minimum": 1 },
+        "max_documents_per_batch": { "type": "integer", "minimum": 1 },
+        "checkpoint_interval": { "type": "integer", "minimum": 1 },
+        "retry_attempts": { "type": "integer", "minimum": 0 },
+        "timeout_seconds": { "type": "integer", "minimum": 1 },
+        "memory_limit_gb": { "type": "number", "minimum": 0 },
+        "auto_detect_workers": { "type": "boolean" }
+      }
+    },
+    "llm_models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "api_key": { "type": "string" },
+          "base_url": { "type": "string" },
+          "model_name": { "type": "string" },
+          "use_streaming": { "type": "boolean" },
+          "max_retries": { "type": "integer", "minimum": 0 },
+          "timeout": { "type": "integer", "minimum": 1 }
+        },
+        "required": ["name", "api_key", "base_url", "model_name"]
+      }
+    }
+  },
+  "required": ["paths", "processing", "llm_models"]
+}

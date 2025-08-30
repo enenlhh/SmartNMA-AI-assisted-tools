@@ -1,0 +1,234 @@
+:root {
+    --primary-color: #3a7ca5;
+    --secondary-color: #d6e2e9;
+    --text-color: #2c3e50;
+    --light-bg: #f5f7fa;
+    --highlight-blue: rgba(135, 206, 250, 0.3);
+    --highlight-green: rgba(144, 238, 144, 0.3);
+    --border-radius: 8px;
+    --frozen-bg: #eaf1f5; /* Background for frozen columns */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    margin: 0;
+    padding: 1rem;
+}
+
+#app {
+    max-width: 95%; /* Use percentage for better responsiveness */
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+h1, h2 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap; /* Allows controls to stack on smaller screens */
+}
+
+label {
+    font-weight: bold;
+}
+
+select, button, a.button {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--secondary-color);
+    background-color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button, a.button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, a.button:hover {
+    opacity: 0.9;
+}
+
+#save-button {
+    background-color: #27ae60;
+}
+
+#table-container {
+    width: 100%;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 0.6rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+thead th {
+    background-color: var(--secondary-color);
+    position: sticky;
+    top: 0;
+    z-index: 2; /* Higher z-index for header */
+}
+
+/* --- Styles for Frozen Columns --- */
+th:nth-child(1), td:nth-child(1),
+th:nth-child(2), td:nth-child(2) {
+    position: sticky;
+    background-color: var(--frozen-bg);
+    z-index: 1;
+}
+
+th:nth-child(1), td:nth-child(1) {
+    left: 0;
+    min-width: 120px; /* Ensure a minimum width */
+}
+
+th:nth-child(2), td:nth-child(2) {
+    left: 120px; /* Must match the width of the first column */
+    min-width: 120px;
+}
+/* --- End Frozen Column Styles --- */
+
+td.editable-cell {
+    background-color: var(--highlight-blue);
+}
+
+td.calculated-cell {
+    background-color: var(--highlight-green);
+    font-weight: 500;
+    transition: background-color 0.3s ease; /* Add a subtle transition */
+}
+
+td select, td textarea {
+    width: 100%;
+    min-width: 150px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+td textarea {
+    min-height: 60px;
+    resize: vertical;
+    white-space: normal;
+}
+
+.reason-col {
+    min-width: 250px;
+    white-space: normal;
+}
+
+.cell-hint {
+    margin-top: 8px;
+    padding: 6px;
+    font-size: 0.85em;
+    color: #856404; /* A brownish-yellow color */
+    background-color: #fff3cd; /* Light yellow background */
+    border-left: 3px solid #ffeeba;
+    border-radius: 3px;
+    white-space: normal; /* Allow text to wrap */
+    line-height: 1.4;
+}
+.cell-hint strong {
+    color: #664d03;
+}
+
+/* Wrapper for aligning input and tooltip icon */
+.cell-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between input and icon */
+}
+.cell-content-wrapper select,
+.cell-content-wrapper textarea {
+    flex-grow: 1; /* Make the input field take up available space */
+}
+/* --- Tooltip Styles --- */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+.tooltip-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #856404; /* A dark, rich brown/orange color */
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: help;
+    user-select: none; /* Prevent text selection */
+}
+.tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: 280px;
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 10;
+    bottom: 150%; /* Position above the trigger */
+    left: 50%;
+    margin-left: -140px; /* Use half of the width to center */
+    transition: opacity 0.3s;
+    white-space: normal; /* Allow text to wrap */
+    line-height: 1.4;
+    font-size: 0.9em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+/* Arrow for the tooltip */
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+/* Show the tooltip text when hovering over the container */
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Style for cells that contain a hint tooltip */
+td.has-hint {
+    background-color: #fff3cd; /* A light, warning-style yellow */
+}

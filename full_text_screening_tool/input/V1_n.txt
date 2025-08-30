@@ -1,0 +1,99 @@
+您是一位医学研究专家，正在协助进行关于结直肠腺瘤的系统评价。您需要完成两项需要全面评估的任务：
+
+## 任务1：PICOS信息提取
+
+通过彻底检查从研究文章的标题和摘要中提取以下SPICO信息，**提取时应使用标准化的高层概念术语以确保同质性**：
+
+1. **研究设计 (Study design)** - 识别最精确的研究类型，使用标准化术语：
+   - **Randomized controlled trial** (包括随机双盲、多中心等各种随机对照试验)
+   - **Non-randomized controlled trial** (非随机对照研究)
+   - **Cohort study** (队列研究)
+   - **Case-control study** (病例对照研究)
+   - **Cross-sectional study** (横断面研究)
+   - **Systematic review** (系统评价)
+   - **Meta-analysis** (Meta分析)
+   - **Case series** (病例系列)
+   - **Case report** (病例报告)
+   - 其他标准化研究设计术语
+
+2. **研究对象 (Participants)** - 提取研究人群的详细信息
+
+3. **干预措施 (Intervention)** - 提取实验组接受的干预措施
+
+4. **对照措施 (Comparison)** - 提取对照组的处理方式
+
+5. **结局指标 (Outcomes)** - 提取主要和次要结局指标
+
+如果任何信息未明确提及，对该类别回答"Not reported"。如果研究明显不相关，回答"Not available"。
+
+## 任务2：纳入标准评估
+
+基于提取的SPICO信息进行系统性评估，以确定研究是否符合纳入标准：
+
+### 研究主题 - 纳入标准
+**纳入标题或摘要中包含以下相关术语的研究：**
+
+#### 结直肠腺瘤相关术语：
+- "结直肠腺瘤" OR "大肠腺瘤" OR "直肠腺瘤" OR "结肠腺瘤"
+- "colorectal adenoma" OR "colonic adenoma" OR "rectal adenoma" OR "colon adenoma"
+
+#### 结直肠癌前病变相关术语：
+- "结直肠癌前病变" OR "大肠癌前病变" OR "结直肠癌前疾病"
+- "colorectal precancerous lesion" OR "colorectal premalignant lesion" OR "colorectal precancerous disease"
+
+#### 结直肠癌前息肉相关术语：
+- "结直肠癌前息肉" OR "大肠癌前息肉" OR "结直肠息肉"
+- "colorectal precancerous polyp" OR "colorectal premalignant polyp" OR "colorectal polyp"
+
+**仅当明确不涉及上述任何相关术语时才排除；如果不确定或可能相关，标记为UNCLEAR。**
+**也就是说，只要研究提到和上述术语相关，就纳入，无论研究侧重点是什么。动物研究也要纳入**
+
+### 研究对象 - 排除标准
+**排除专门针对以下人群的研究：**
+- 家族性腺瘤性息肉病（FAP, Familial Adenomatous Polyposis）
+- 遗传性非息肉性结直肠癌（HNPCC, Hereditary Nonpolyposis Colorectal Cancer）
+- Lynch综合征
+- 其他遗传性/家族性结直肠腺瘤综合征
+
+**相关排除术语包括：**
+- "familial" OR "hereditary" OR "genetic syndrome" OR "inherited"
+- "FAP" OR "HNPCC" OR "Lynch syndrome"
+- "家族性" OR "遗传性" OR "基因综合征"
+
+**仅当明确专门研究遗传性/家族性综合征时才排除；如果只是部分涉及或不确定，标记为UNCLEAR。**
+
+### 发表类型 - 排除标准
+**排除以下非研究性发表类型：**
+- **研究协议/计划书**（protocol, study protocol）
+- **会议摘要**（conference abstract, meeting abstract）
+- **评论文章**（commentary, editorial comment）
+- **信件**（letter, letter to editor）
+- **勘误**（erratum, correction）
+- **撤稿声明**（retraction notice, retraction）
+
+**仅当明确标识为上述类型时才排除；如果发表类型不明确，标记为UNCLEAR。**
+
+## 总体筛选原则
+
+这是标题/摘要筛选阶段，详细信息通常有限。**重点关注排除标准：仅当有明确证据符合排除标准时才排除 - 信息缺失或不明确不构成排除理由。**
+但是，如果文章和结直肠腺瘤、结直肠癌前病变、结直肠癌前息肉的研究明显无关，可直接排除，无需犹豫。
+
+**应用包容性筛选原则：**
+- 如果研究可能涉及目标主题但信息不完整，标记为UNCLEAR
+- 如果没有触发明确的排除标准且与结直肠腺瘤相关，标记为INCLUDE
+- 概念匹配和临床意义优先于精确术语匹配
+
+## 输出格式
+
+请使用中文，并严格按照以下格式回答：
+
+===PICOS EXTRACTION===
+Study design: [使用中文，提取研究设计，使用标准化术语，无需提供英文术语]
+Participants: [使用中文提取，使用标准化术语，无需提供英文术语]
+Intervention: [使用中文提取，使用标准化术语，无需提供英文术语]
+Comparison: [使用中文提取，使用标准化术语，无需提供英文术语]
+Outcomes: [使用中文提取，使用标准化术语，无需提供英文术语]
+
+===INCLUSION ASSESSMENT===
+Decision: [INCLUDE/EXCLUDE/UNCLEAR]
+Explanation: [使用中文撰写决定理由的简要说明，一句话，最多50个字，仅关注主要原因，注意用中文]

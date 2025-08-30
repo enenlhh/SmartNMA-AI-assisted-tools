@@ -1,0 +1,437 @@
+{
+  "_comment_header": "=== SmartEBM Literature Screening Tool - Configuration Template ===",
+  "_description": "This configuration template contains all configurable options. You can customize it according to different research needs",
+  "_usage_guide": "1. Copy this template file as config.json 2. Modify configurations according to your research 3. Pay special attention to study_designs section",
+  "_template_version": "v2.0 - August 2025",
+  "_quick_start": "1.Modify file paths in paths section 2.Select appropriate study_designs 3.Configure PICOS criteria 4.Set API keys 5.Run parallel_run.py",
+  
+  "mode": {
+    "_comment": "Runtime mode configuration",
+    "_screening_mode_options": "Options: 'single'(single-threaded, suitable for small files/debugging) or 'parallel'(parallel processing, recommended for large batches)",
+    "_cost_analysis_note": "Token cost analysis feature: Generates detailed API call cost reports, recommended to enable",
+    "screening_mode": "parallel",
+    "enable_cost_analysis": true
+  },
+  
+  "paths": {
+    "_comment": "File path configuration - Modify all paths according to your project",
+    "_input_xml_note": "Input XML file: XML file exported from literature management software like Zotero/EndNote/PubMed",
+    "_output_directory_note": "Output directory: Folder path to save screening results",
+    "_output_xml_note": "Output XML file: Final merged screening results filename",
+    "_prompt_files_note": "Prompt files: Main prompt (containing PICOS criteria), positive examples file, negative examples file",
+    "input_xml_path": "input/your_literature.xml",
+    "output_directory": "output/",
+    "output_xml_path": "output/screening_results.xml",
+    "prompt_file_path": "input/main_prompt.txt",
+    "positive_prompt_file_path": "input/positive_examples.txt",
+    "negative_prompt_file_path": "input/negative_examples.txt"
+  },
+  
+  "processing": {
+    "_comment": "Data processing configuration",
+    "_skip_note": "Skip records count: Start processing from the Nth record (0=start from beginning, used for resuming or testing)",
+    "skip_records_count": 0
+  },
+  
+  "parallel_settings": {
+    "_comment": "Parallel screening configuration (only effective when screening_mode=parallel)",
+    "_screeners_note": "Number of parallel screeners: Recommended to be 50%-75% of CPU cores, e.g., 2-4 screeners for 4-core CPU",
+    "_auto_distribute_note": "Auto distribution: Whether to automatically distribute literature evenly among screeners",
+    "_temp_dir_note": "Temporary directory: Store temporary files during screening process",
+    "_cleanup_note": "Cleanup temporary files: Whether to automatically delete temporary files after screening completion",
+    "_retry_note": "Retry mechanism: Whether to retry failed batches and maximum retry attempts",
+    "_state_file_note": "State file: Save screening progress, supports resuming from interruption",
+    "parallel_screeners": 4,
+    "auto_distribute": true,
+    "temp_dir": "temp_parallel",
+    "cleanup_temp_files": true,
+    "retry_failed_batches": true,
+    "max_retries": 3,
+    "state_file": "parallel_screening_state.json"
+  },
+  
+  "resource_management": {
+    "_comment": "Resource management configuration - Prevent API call overload and memory shortage",
+    "_api_limit_note": "API call frequency limit: Maximum calls per minute to avoid triggering API provider limits",
+    "_memory_note": "Memory limit: Maximum memory usage per screener (MB)",
+    "_timing_note": "Time intervals: Delay between screener startup and progress update frequency (seconds)",
+    "api_calls_per_minute_limit": 100,
+    "memory_limit_mb": 2048,
+    "delay_between_screeners": 2,
+    "progress_update_interval": 10
+  },
+  
+  "output_settings": {
+    "_comment": "Output settings configuration",
+    "_prefix_note": "Output prefix: Naming prefix for final merged files",
+    "_backup_note": "Backup individual results: Whether to keep individual screener result files",
+    "_report_note": "Detailed report: Whether to generate detailed reports with statistics",
+    "_merge_note": "File merging: Merging settings for Excel and XML result files",
+    "final_output_prefix": "final_results",
+    "backup_individual_results": true,
+    "generate_detailed_report": true,
+    "merge_excel_files": true,
+    "merge_xml_files": true
+  },
+  
+  "study_designs": {
+    "_designs_comment": "=== Study Design Types Configuration - Select appropriate study designs for your research ===",
+    "_selection_guide": "Select according to your systematic review question: 1.Intervention effect studies→Choose experimental studies 2.Prevalence studies→Choose cross-sectional studies 3.Risk factor studies→Choose cohort or case-control studies",
+    "_included_note": "Included study design types - Study types that meet your systematic review requirements, will be prioritized for inclusion",
+    "_excluded_note": "Excluded study design types - Study types that don't meet inclusion criteria, will be pre-screened out",
+    "_hierarchy_note": "Study design hierarchy: Experimental studies > Observational studies > Descriptive studies > Informal studies",
+    
+    "included_study_designs": [
+      "_comment_included_options": "=== Available Included Study Design Types ===",
+      "_experimental_studies": "Experimental studies (Intervention studies) - Suitable for treatment effect evaluation",
+      "randomized_controlled_trial",
+      "non_randomized_trial", 
+      "quasi_experimental_study",
+      "pragmatic_trial",
+      "pilot_study",
+      "feasibility_study",
+      "clinical_trial",
+      
+      "_observational_studies": "Observational studies - Suitable for etiology, prognosis, diagnostic accuracy studies",
+      "_cohort_studies": "Cohort studies - Suitable for etiology and prognosis studies",
+      "_case_control_studies": "Case-control studies - Suitable for etiology studies of rare diseases", 
+      "_cross_sectional_studies": "Cross-sectional studies - Suitable for prevalence and diagnostic accuracy studies",
+      "_note_observational": "Uncomment lines below to include observational studies:",
+      "// cohort_study",
+      "// case_control_study", 
+      "// cross_sectional_study",
+      "// longitudinal_study",
+      "// retrospective_study",
+      "// prospective_study",
+      "// ecological_study",
+      "// registry_study",
+      "// population_study",
+      
+      "_qualitative_studies": "Qualitative studies - Suitable for experience and perception studies",
+      "_note_qualitative": "Uncomment lines below to include qualitative studies:",
+      "// interview_study",
+      "// focus_group_study", 
+      "// ethnography",
+      "// phenomenological_study",
+      "// grounded_theory_study",
+      "// case_study_qualitative",
+      
+      "_descriptive_studies": "Descriptive studies - Generally not included in systematic reviews",
+      "_note_descriptive": "Usually not recommended for inclusion, uncomment if needed:",
+      "// case_study",
+      "// case_report",
+      "// case_series",
+      "// survey_study",
+      "// questionnaire_study",
+      "// delphi_study"
+    ],
+    
+    "excluded_study_designs": [
+      "_comment_excluded_options": "=== Usually Excluded Study Design Types ===",
+      "_reviews": "Various review articles - Usually excluded to avoid duplicate inclusion of original studies",
+      "review",
+      "systematic_review",
+      "meta_analysis", 
+      "network_meta_analysis",
+      "narrative_review",
+      "scoping_review",
+      "literature_review",
+      "overview",
+      "umbrella_review",
+      "critical_review",
+      "integrative_review",
+      "state_of_the_art_review",
+      "clinical_review",
+      
+      "_observational_exclude": "Observational studies - If your research only focuses on intervention effects, these can be excluded",
+      "_note_observational_exclude": "If your research needs observational studies, delete corresponding lines:",
+      "observational_study",
+      "cohort_study",
+      "case_control_study",
+      "cross_sectional_study", 
+      "longitudinal_study",
+      "retrospective_study",
+      "prospective_study",
+      "ecological_study",
+      "registry_study",
+      "population_study",
+      
+      "_qualitative_exclude": "Qualitative studies - Delete corresponding lines if your research needs qualitative evidence",
+      "qualitative_study",
+      "interview_study",
+      "focus_group_study",
+      "ethnography",
+      "phenomenological_study", 
+      "grounded_theory_study",
+      "case_study_qualitative",
+      
+      "_descriptive_exclude": "Descriptive studies - Usually don't provide high-quality evidence",
+      "case_study",
+      "case_report", 
+      "case_series",
+      "survey_study",
+      "questionnaire_study",
+      "delphi_study",
+      
+      "_economic_exclude": "Economic studies - Can be excluded if not an economic evaluation research",
+      "economic_study",
+      "cost_effectiveness_analysis",
+      "cost_utility_analysis", 
+      "budget_impact_analysis",
+      
+      "_other_exclude": "Other types - Usually excluded",
+      "mixed_methods_study",
+      "non_formal_study",
+      "protocol",
+      "erratum",
+      "letter",
+      "comment",
+      "commentary",
+      "editorial",
+      "perspective", 
+      "opinion",
+      "correspondence"
+    ]
+  },
+  
+  "llm_configs": {
+    "_comment": "Large Language Model configuration - Configure according to your API resources",
+    "_model_selection_guide": "Model selection recommendation: GPT-4(highest quality but expensive) > Claude-3(balanced) > DeepSeek(cost-effective, recommended) > Other models",
+    "_deepseek_advantages": "DeepSeek advantages: Extremely cost-effective, supports time-based billing, lower prices at night, strong Chinese processing capability",
+    "_apiyi_note": "APIYI is a reliable third-party API provider supporting multiple models with relatively affordable prices",
+    
+    "prompt_llm": {
+      "_comment": "Prompt generation model - Used for generating and optimizing screening prompts, recommend using high-performance models",
+      "_model_note": "Recommended: gpt-4, claude-3-sonnet, deepseek-chat or other high-performance models",
+      "_deepseek_option": "For DeepSeek, recommend using deepseek-chat or deepseek-reasoner",
+      "api_key": "your_prompt_api_key_here",
+      "base_url": "https://api.openai.com/v1",
+      "model": "gpt-4"
+    },
+    
+    "screening_llms": {
+      "_comment": "Screening model group - Multiple LLM models for actual literature screening, supports multi-model consensus decision",
+      "_multi_model_note": "Can configure multiple different models for consensus screening to improve accuracy",
+      "_cost_note": "Recommend choosing appropriate model combinations based on budget",
+      "_deepseek_recommendation": "Highly recommend DeepSeek, extremely cost-effective with quality close to GPT-4",
+      
+      "LLM_A": {
+        "_comment": "Screener A - Primary screening model",
+        "_model_options": "Recommended: deepseek-chat(most cost-effective) > gpt-3.5-turbo > claude-3-haiku",
+        "_deepseek_config": "DeepSeek recommended configuration, lowest cost",
+        "api_key": "your_deepseek_api_key_here",
+        "base_url": "https://api.deepseek.com/v1", 
+        "model": "deepseek-chat"
+      },
+      
+      "LLM_B": {
+        "_comment": "Screener B - Auxiliary screening model (optional)",
+        "_note": "Recommend using different models to improve diversity in consensus decision making",
+        "_deepseek_reasoner_note": "Can use deepseek-reasoner for stronger reasoning capability",
+        "api_key": "your_deepseek_api_key_here",
+        "base_url": "https://api.deepseek.com/v1",
+        "model": "deepseek-chat"
+      },
+      
+      "_additional_llms_note": "Can add more LLM configurations like LLM_C, LLM_D etc., same format"
+    }
+  },
+  
+  "inclusion_criteria": {
+    "_comment": "=== PICOS Inclusion Criteria - Fill in details according to your systematic review question ===",
+    "_picos_note": "Define your research question based on PICOS framework: Population-Intervention-Comparison-Outcomes-Study design",
+    "_filling_guide": "Detailed descriptions help AI screen literature more accurately, each field should be specific and clear",
+    
+    "Study design": {
+      "_note": "Study design requirements - Keep consistent with study_designs configuration",
+      "_examples": "e.g.: randomized controlled trials, observational studies, mixed methods studies", 
+      "_your_criteria": "Please fill in your study design requirements here",
+      "value": "randomized controlled trials"
+    },
+    
+    "Participants": {
+      "_note": "Study participants/population - Describe target population characteristics in detail",
+      "_examples": "e.g.: adult patients with diabetes, hypertensive patients aged 18-65, pediatric asthma patients",
+      "_considerations": "Consider age, gender, disease status, severity, etc.",
+      "_your_criteria": "Please fill in your target population here",
+      "value": "adult patients, aged 18 years and above"
+    },
+    
+    "Intervention": {
+      "_note": "Intervention measures - Describe the intervention of interest in detail",
+      "_examples": "e.g.: cognitive behavioral therapy, aspirin treatment, exercise training, educational intervention", 
+      "_considerations": "Include medications, surgery, behavioral interventions, education, technology, etc.",
+      "_your_criteria": "Please fill in your intervention measures here",
+      "value": "your intervention of interest"
+    },
+    
+    "Comparison": {
+      "_note": "Control group - Describe control/comparison conditions", 
+      "_examples": "e.g.: placebo, usual care, no intervention, other intervention measures",
+      "_options": "Can be: placebo control, active control, usual care, no intervention, etc.",
+      "_your_criteria": "Please fill in control group requirements here, fill 'no restriction' if no specific requirements",
+      "value": "placebo or usual care"
+    },
+    
+    "Outcomes": {
+      "_note": "Outcome measures - Describe primary and secondary outcomes",
+      "_examples": "e.g.: symptom improvement, quality of life, adverse events, mortality, hospitalization rate",
+      "_primary_secondary": "Include primary outcomes and important secondary outcomes",
+      "_your_criteria": "Please fill in your outcome measures of interest here",
+      "value": "primary and secondary clinical outcomes"
+    },
+    
+    "Additional": {
+      "_note": "Other inclusion criteria - Language, publication type, time restrictions, etc.",
+      "_examples": "e.g.: published in English, published after 2010, peer-reviewed journals",
+      "_time_limit": "Consider publication time limits, language restrictions, etc.",
+      "_your_criteria": "Please fill in other requirements here, fill 'none' if no requirements",
+      "value": "published in English, peer-reviewed journals"
+    }
+  },
+  
+  "exclusion_criteria": {
+    "_comment": "=== PICOS Exclusion Criteria - Clearly define study types and conditions not to be included ===",
+    "_purpose_note": "Exclusion criteria correspond to inclusion criteria, clearly exclude literature that doesn't meet research objectives",
+    
+    "Study design": {
+      "_note": "Excluded study designs",
+      "_examples": "e.g.: case reports, review articles, conference abstracts",
+      "value": "case reports, case series, review articles"
+    },
+    
+    "Participants": {
+      "_note": "Excluded populations",
+      "_examples": "e.g.: pediatric patients, pregnant women, patients with specific diseases",
+      "value": "pediatric patients (under 18 years)"
+    },
+    
+    "Intervention": {
+      "_note": "Excluded intervention measures", 
+      "_examples": "e.g.: surgical treatment, specific medications, non-standard treatments",
+      "value": "non-standardized intervention measures"
+    },
+    
+    "Comparison": {
+      "_note": "Excluded control types",
+      "_examples": "e.g.: historical controls, self-controls",
+      "value": "no restriction"
+    },
+    
+    "Outcomes": {
+      "_note": "Excluded outcome types",
+      "_examples": "e.g.: only laboratory indicators, only intermediate outcomes",
+      "value": "no restriction"
+    },
+    
+    "Additional": {
+      "_note": "Other exclusion criteria",
+      "_examples": "e.g.: non-English publications, conference abstracts, duplicate publications",
+      "value": "conference abstracts, duplicate publications, non-English literature"
+    }
+  },
+  
+  "_template_customization_guide": {
+    "_comment": "=== Template Customization Guide ===",
+    "_step1": "1. Path configuration: Modify all file paths in paths section to point to your actual files",
+    "_step2": "2. Study design selection: Select appropriate inclusion and exclusion types in study_designs according to your research",
+    "_step3": "3. PICOS criteria: Fill in detailed criteria in inclusion_criteria and exclusion_criteria",
+    "_step4": "4. API configuration: Fill in your API keys and select appropriate models in llm_configs",
+    "_step5": "5. Parallel settings: Adjust number of screeners in parallel_settings according to your hardware configuration",
+    "_step6": "6. Test run: First test with small sample to verify configuration is correct",
+    "_step7": "7. Full run: Use complete dataset for literature screening"
+  },
+  
+  "_common_study_types": {
+    "_comment": "=== Configuration Recommendations for Common Study Types ===",
+    "_intervention_studies": "Intervention effect studies: Include randomized_controlled_trial and other experimental studies",
+    "_etiology_studies": "Etiology studies: Include cohort_study, case_control_study and other observational studies", 
+    "_diagnostic_studies": "Diagnostic accuracy studies: Include cross_sectional_study, cohort_study",
+    "_prognosis_studies": "Prognosis studies: Include cohort_study, longitudinal_study",
+    "_prevalence_studies": "Prevalence studies: Include cross_sectional_study",
+    "_qualitative_synthesis": "Qualitative synthesis: Include interview_study, focus_group_study and other qualitative studies"
+  },
+  
+  "_recommended_configurations": {
+    "_comment": "=== Recommended Configuration Schemes ===",
+    
+    "_deepseek_optimal": {
+      "_name": "DeepSeek Cost-Optimal Scheme",
+      "_description": "Using DeepSeek models, lowest cost, suitable for large-scale literature screening",
+      "_estimated_cost": "Processing 10,000 articles costs approximately $50-100 (depending on time period)",
+      "prompt_llm": {
+        "api_key": "your_deepseek_api_key",
+        "base_url": "https://api.deepseek.com/v1",
+        "model": "deepseek-chat"
+      },
+      "screening_llms": {
+        "LLM_A": {
+          "api_key": "your_deepseek_api_key",
+          "base_url": "https://api.deepseek.com/v1",
+          "model": "deepseek-chat"
+        },
+        "LLM_B": {
+          "api_key": "your_deepseek_api_key",
+          "base_url": "https://api.deepseek.com/v1",
+          "model": "deepseek-reasoner"
+        }
+      },
+      "_tips": "Recommend running during UTC 16:30-00:30 to enjoy 50% discount"
+    },
+    
+    "_apiyi_balanced": {
+      "_name": "APIYI Third-Party Balanced Scheme",
+      "_description": "Using APIYI third-party API, moderate pricing, rich model selection",
+      "_estimated_cost": "Processing 10,000 articles costs approximately $200-500",
+      "prompt_llm": {
+        "api_key": "your_apiyi_api_key",
+        "base_url": "https://vip.apiyi.com/v1",
+        "model": "gpt-4.1"
+      },
+      "screening_llms": {
+        "LLM_A": {
+          "api_key": "your_apiyi_api_key",
+          "base_url": "https://vip.apiyi.com/v1",
+          "model": "gpt-3.5-turbo"
+        },
+        "LLM_B": {
+          "api_key": "your_apiyi_api_key",
+          "base_url": "https://vip.apiyi.com/v1",
+          "model": "claude-3-sonnet"
+        }
+      }
+    },
+    
+    "_hybrid_premium": {
+      "_name": "Hybrid High-Quality Scheme",
+      "_description": "Combining DeepSeek and official APIs, balancing cost and quality",
+      "_estimated_cost": "Processing 10,000 articles costs approximately $150-300",
+      "prompt_llm": {
+        "api_key": "your_openai_api_key",
+        "base_url": "https://api.openai.com/v1",
+        "model": "gpt-4o-mini"
+      },
+      "screening_llms": {
+        "LLM_A": {
+          "api_key": "your_deepseek_api_key",
+          "base_url": "https://api.deepseek.com/v1",
+          "model": "deepseek-chat"
+        },
+        "LLM_B": {
+          "api_key": "your_claude_api_key",
+          "base_url": "https://api.anthropic.com/v1",
+          "model": "claude-3-haiku"
+        }
+      }
+    }
+  },
+  
+  "_cost_optimization_guide": {
+    "_comment": "=== Cost Optimization Guide ===",
+    "_deepseek_time_discount": "DeepSeek night discount: Enjoy 50% discount during UTC 16:30-00:30",
+    "_batch_processing": "Batch processing: Using parallel processing improves efficiency, but pay attention to API limits",
+    "_single_vs_multi": "Single vs multi-model: Use single DeepSeek model when budget is tight",
+    "_api_key_management": "API key management: Use different keys for different providers to distribute risk",
+    "_monitoring": "Cost monitoring: Enable cost_analysis feature to monitor API call costs in real-time"
+  }
+}

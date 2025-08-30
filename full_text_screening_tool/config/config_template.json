@@ -1,0 +1,48 @@
+{
+  "paths": {
+    "input_folder_path": "path/to/your/fulltext_articles",
+    "output_excel_path": "output/fulltext_screening_results.xlsx",
+    "prompt_file_path": "prompts/fulltext_prompt.txt",
+    "positive_prompt_file_path": "prompts/fulltext_positive_prompt.txt",
+    "negative_prompt_file_path": "prompts/fulltext_negative_prompt.txt"
+  },
+  "processing": {
+    "max_files": null,
+    "start_from": null
+  },
+  "llm_configs": {
+    "prompt_llm": {
+      "api_key": "YOUR_API_KEY_HERE",
+      "base_url": "BASE_URL_HERE",
+      "model": "MODEL_NAME"
+    },
+    "screening_llms": {
+      "LLM_A": {
+        "api_key": "YOUR_API_KEY_HERE",
+        "base_url": "BASE_URL_HERE",
+        "model": "MODEL_NAME"
+      },
+      "LLM_B": {
+        "api_key": "YOUR_API_KEY_HERE",
+        "base_url": "BASE_URL_HERE",
+        "model": "MODEL_NAME"
+      }
+    }
+  },
+  "inclusion_criteria": {
+    "Study design": "Describe your inclusion criteria for study design (e.g., Randomized controlled trials).",
+    "Participants": "Describe your target population (e.g., Adult patients with type 2 diabetes).",
+    "Intervention": "Describe the intervention of interest (e.g., Treatment with semaglutide).",
+    "Comparison": "Describe the acceptable comparators (e.g., Placebo or other active antidiabetic drugs).",
+    "Outcomes": "Describe the outcomes of interest (e.g., Change in HbA1c, body weight).",
+    "Additional": "Any other inclusion criteria."
+  },
+  "exclusion_criteria": {
+    "Study design": "Describe exclusion criteria for study design (e.g., Observational studies, reviews).",
+    "Participants": "Describe populations to exclude (e.g., Patients with type 1 diabetes).",
+    "Intervention": "Describe interventions to exclude.",
+    "Comparison": "No limit",
+    "Outcomes": "No limit",
+    "Additional": "Any other exclusion criteria (e.g., non-English articles)."
+  }
+}

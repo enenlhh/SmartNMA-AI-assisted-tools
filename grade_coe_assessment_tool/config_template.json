@@ -1,0 +1,21 @@
+{
+    "data_settings": {
+      "base_dir": "data/Results",
+      "output_dir": "output"
+    },
+    "mid_params": {
+      "harmful_mid": 1.25,
+      "benefit_mid": 0.8
+    },
+    "rob_params": {
+      "high_risk_count_threshold": 0.5,
+      "high_risk_weight_threshold": 50,
+      "very_serious_weight_threshold": 80
+    },
+    "inconsistency_params": {
+      "i2_threshold": 60,
+      "i2_very_serious_threshold": 90,
+      "ci_overlap_threshold": 0.5
+    }
+  }
+  

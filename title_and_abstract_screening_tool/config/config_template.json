@@ -1,0 +1,437 @@
+{
+  "_comment_header": "=== SmartEBM文献筛选工具 - 配置模板文件 ===",
+  "_description": "本配置模板包含所有可配置选项，您可以根据不同课题需求进行定制",
+  "_usage_guide": "1. 复制此模板文件为config.json 2. 根据您的课题修改相应配置 3. 特别注意study_designs部分的选择",
+  "_template_version": "v2.0 - 2025年8月",
+  "_quick_start": "1.修改paths中的文件路径 2.选择适合的study_designs 3.配置PICOS标准 4.设置API密钥 5.运行parallel_run.py",
+  
+  "mode": {
+    "_comment": "运行模式配置",
+    "_screening_mode_options": "可选值: 'single'(单线程,适合小文件调试) 或 'parallel'(并行处理,推荐用于大批量文献)",
+    "_cost_analysis_note": "token成本分析功能: 生成详细的API调用费用报告，建议开启",
+    "screening_mode": "parallel",
+    "enable_cost_analysis": true
+  },
+  
+  "paths": {
+    "_comment": "文件路径配置 - 根据您的项目修改所有路径",
+    "_input_xml_note": "输入XML文件: 从Zotero/EndNote/PubMed等文献管理软件导出的XML文件",
+    "_output_directory_note": "输出目录: 筛选结果保存的文件夹路径",
+    "_output_xml_note": "输出XML文件: 最终合并的筛选结果文件名",
+    "_prompt_files_note": "Prompt文件: 主prompt(包含PICOS标准)、正面示例文件、负面示例文件",
+    "input_xml_path": "input/your_literature.xml",
+    "output_directory": "output/",
+    "output_xml_path": "output/screening_results.xml",
+    "prompt_file_path": "input/main_prompt.txt",
+    "positive_prompt_file_path": "input/positive_examples.txt",
+    "negative_prompt_file_path": "input/negative_examples.txt"
+  },
+  
+  "processing": {
+    "_comment": "数据处理配置",
+    "_skip_note": "跳过记录数: 从第N条记录开始处理(0=从头开始,用于断点续传或测试)",
+    "skip_records_count": 0
+  },
+  
+  "parallel_settings": {
+    "_comment": "并行筛选配置 (仅在screening_mode=parallel时生效)",
+    "_screeners_note": "并行筛选器数量: 建议为CPU核心数的50%-75%，如4核CPU建议2-4个筛选器",
+    "_auto_distribute_note": "自动分配: 是否自动将文献平均分配给各筛选器",
+    "_temp_dir_note": "临时目录: 存储筛选过程中的临时文件",
+    "_cleanup_note": "清理临时文件: 筛选完成后是否自动删除临时文件",
+    "_retry_note": "重试机制: 是否重试失败的批次及最大重试次数",
+    "_state_file_note": "状态文件: 保存筛选进度，支持断点续传",
+    "parallel_screeners": 4,
+    "auto_distribute": true,
+    "temp_dir": "temp_parallel",
+    "cleanup_temp_files": true,
+    "retry_failed_batches": true,
+    "max_retries": 3,
+    "state_file": "parallel_screening_state.json"
+  },
+  
+  "resource_management": {
+    "_comment": "资源管理配置 - 防止API调用过载和内存不足",
+    "_api_limit_note": "API调用频率限制: 每分钟最大调用次数，避免触发API提供商的限制",
+    "_memory_note": "内存限制: 单个筛选器的最大内存使用量(MB)",
+    "_timing_note": "时间间隔: 筛选器启动间隔和进度更新频率(秒)",
+    "api_calls_per_minute_limit": 100,
+    "memory_limit_mb": 2048,
+    "delay_between_screeners": 2,
+    "progress_update_interval": 10
+  },
+  
+  "output_settings": {
+    "_comment": "输出设置配置",
+    "_prefix_note": "输出前缀: 最终合并文件的命名前缀",
+    "_backup_note": "备份单独结果: 是否保留各筛选器的单独结果文件",
+    "_report_note": "详细报告: 是否生成包含统计信息的详细报告",
+    "_merge_note": "文件合并: Excel和XML结果文件的合并设置",
+    "final_output_prefix": "final_results",
+    "backup_individual_results": true,
+    "generate_detailed_report": true,
+    "merge_excel_files": true,
+    "merge_xml_files": true
+  },
+  
+  "study_designs": {
+    "_designs_comment": "=== 研究设计类型配置 - 根据您的课题选择适合的研究设计 ===",
+    "_selection_guide": "根据您的系统评价问题选择: 1.干预效果研究→选择实验性研究 2.患病率研究→选择横断面研究 3.风险因素研究→选择队列或病例对照研究",
+    "_included_note": "纳入的研究设计类型 - 符合您系统评价要求的研究类型，会优先纳入",
+    "_excluded_note": "排除的研究设计类型 - 不符合纳入标准的研究类型，会被预筛选排除",
+    "_hierarchy_note": "研究设计层次: 实验性研究 > 观察性研究 > 描述性研究 > 非正式研究",
+    
+    "included_study_designs": [
+      "_comment_included_options": "=== 可选的纳入研究设计类型 ===",
+      "_experimental_studies": "实验性研究(干预研究) - 适用于治疗效果评价",
+      "randomized_controlled_trial",
+      "non_randomized_trial", 
+      "quasi_experimental_study",
+      "pragmatic_trial",
+      "pilot_study",
+      "feasibility_study",
+      "clinical_trial",
+      
+      "_observational_studies": "观察性研究 - 适用于病因学、预后、诊断准确性研究",
+      "_cohort_studies": "队列研究 - 适用于病因学和预后研究",
+      "_case_control_studies": "病例对照研究 - 适用于罕见疾病的病因学研究", 
+      "_cross_sectional_studies": "横断面研究 - 适用于患病率和诊断准确性研究",
+      "_note_observational": "取消下行注释以纳入观察性研究:",
+      "// cohort_study",
+      "// case_control_study", 
+      "// cross_sectional_study",
+      "// longitudinal_study",
+      "// retrospective_study",
+      "// prospective_study",
+      "// ecological_study",
+      "// registry_study",
+      "// population_study",
+      
+      "_qualitative_studies": "定性研究 - 适用于体验和认知研究",
+      "_note_qualitative": "取消下行注释以纳入定性研究:",
+      "// interview_study",
+      "// focus_group_study", 
+      "// ethnography",
+      "// phenomenological_study",
+      "// grounded_theory_study",
+      "// case_study_qualitative",
+      
+      "_descriptive_studies": "描述性研究 - 一般不纳入系统评价",
+      "_note_descriptive": "通常不建议纳入，如需要请取消注释:",
+      "// case_study",
+      "// case_report",
+      "// case_series",
+      "// survey_study",
+      "// questionnaire_study",
+      "// delphi_study"
+    ],
+    
+    "excluded_study_designs": [
+      "_comment_excluded_options": "=== 通常排除的研究设计类型 ===",
+      "_reviews": "各类综述文章 - 通常排除以避免重复纳入原始研究",
+      "review",
+      "systematic_review",
+      "meta_analysis", 
+      "network_meta_analysis",
+      "narrative_review",
+      "scoping_review",
+      "literature_review",
+      "overview",
+      "umbrella_review",
+      "critical_review",
+      "integrative_review",
+      "state_of_the_art_review",
+      "clinical_review",
+      
+      "_observational_exclude": "观察性研究 - 如果您的课题只关注干预效果，可排除这些",
+      "_note_observational_exclude": "如果课题需要观察性研究，请删除相应行:",
+      "observational_study",
+      "cohort_study",
+      "case_control_study",
+      "cross_sectional_study", 
+      "longitudinal_study",
+      "retrospective_study",
+      "prospective_study",
+      "ecological_study",
+      "registry_study",
+      "population_study",
+      
+      "_qualitative_exclude": "定性研究 - 如果课题需要定性证据，请删除相应行",
+      "qualitative_study",
+      "interview_study",
+      "focus_group_study",
+      "ethnography",
+      "phenomenological_study", 
+      "grounded_theory_study",
+      "case_study_qualitative",
+      
+      "_descriptive_exclude": "描述性研究 - 通常不提供高质量证据",
+      "case_study",
+      "case_report", 
+      "case_series",
+      "survey_study",
+      "questionnaire_study",
+      "delphi_study",
+      
+      "_economic_exclude": "经济学研究 - 如果不是经济学评价课题可排除",
+      "economic_study",
+      "cost_effectiveness_analysis",
+      "cost_utility_analysis", 
+      "budget_impact_analysis",
+      
+      "_other_exclude": "其他类型 - 通常排除",
+      "mixed_methods_study",
+      "non_formal_study",
+      "protocol",
+      "erratum",
+      "letter",
+      "comment",
+      "commentary",
+      "editorial",
+      "perspective", 
+      "opinion",
+      "correspondence"
+    ]
+  },
+  
+  "llm_configs": {
+    "_comment": "大语言模型配置 - 根据您的API资源配置",
+    "_model_selection_guide": "模型选择建议: GPT-4(质量最高但昂贵) > Claude-3(平衡) > DeepSeek(性价比高，推荐) > 其他模型",
+    "_deepseek_advantages": "DeepSeek优势: 性价比极高，支持分时段计费，夜间价格更低，中文处理能力强",
+    "_apiyi_note": "APIYI是可靠的第三方API提供商，支持多种模型，价格相对优惠",
+    
+    "prompt_llm": {
+      "_comment": "Prompt生成模型 - 用于生成和优化筛选prompt，建议使用性能较强的模型",
+      "_model_note": "推荐使用: gpt-4, claude-3-sonnet, deepseek-chat 或其他高性能模型",
+      "_deepseek_option": "如需使用DeepSeek，建议使用deepseek-chat或deepseek-reasoner",
+      "api_key": "your_prompt_api_key_here",
+      "base_url": "https://api.openai.com/v1",
+      "model": "gpt-4"
+    },
+    
+    "screening_llms": {
+      "_comment": "筛选模型组 - 用于实际文献筛选的多个LLM模型，支持多模型共识决策",
+      "_multi_model_note": "可配置多个不同模型进行共识筛选，提高准确性",
+      "_cost_note": "建议根据预算选择合适的模型组合",
+      "_deepseek_recommendation": "强烈推荐DeepSeek，性价比极高，质量接近GPT-4",
+      
+      "LLM_A": {
+        "_comment": "筛选器A - 主要筛选模型",
+        "_model_options": "推荐: deepseek-chat(性价比最高) > gpt-3.5-turbo > claude-3-haiku",
+        "_deepseek_config": "DeepSeek推荐配置，成本最低",
+        "api_key": "your_deepseek_api_key_here",
+        "base_url": "https://api.deepseek.com/v1", 
+        "model": "deepseek-chat"
+      },
+      
+      "LLM_B": {
+        "_comment": "筛选器B - 辅助筛选模型(可选)",
+        "_note": "建议使用不同的模型以提高共识决策的多样性",
+        "_deepseek_reasoner_note": "可以使用deepseek-reasoner获得更强的推理能力",
+        "api_key": "your_deepseek_api_key_here",
+        "base_url": "https://api.deepseek.com/v1",
+        "model": "deepseek-chat"
+      },
+      
+      "_additional_llms_note": "可以添加更多LLM配置，如LLM_C, LLM_D等，格式相同"
+    }
+  },
+  
+  "inclusion_criteria": {
+    "_comment": "=== PICOS纳入标准 - 根据您的系统评价问题详细填写 ===",
+    "_picos_note": "基于PICOS框架定义您的研究问题：Population-Intervention-Comparison-Outcomes-Study design",
+    "_filling_guide": "详细描述有助于AI更准确地筛选文献，每个字段都应该具体明确",
+    
+    "Study design": {
+      "_note": "研究设计要求 - 与study_designs配置保持一致",
+      "_examples": "例如: randomized controlled trials, observational studies, mixed methods studies", 
+      "_your_criteria": "请在此填写您的研究设计要求",
+      "value": "randomized controlled trials"
+    },
+    
+    "Participants": {
+      "_note": "研究对象/人群 - 详细描述目标人群特征",
+      "_examples": "例如: 成年糖尿病患者, 18-65岁高血压患者, 儿童哮喘患者",
+      "_considerations": "考虑年龄、性别、疾病状态、严重程度等",
+      "_your_criteria": "请在此填写您的目标人群",
+      "value": "成年患者，年龄18岁以上"
+    },
+    
+    "Intervention": {
+      "_note": "干预措施 - 详细描述感兴趣的干预",
+      "_examples": "例如: 认知行为疗法, 阿司匹林治疗, 运动训练, 教育干预", 
+      "_considerations": "包括药物、手术、行为干预、教育、技术等",
+      "_your_criteria": "请在此填写您研究的干预措施",
+      "value": "您感兴趣的干预措施"
+    },
+    
+    "Comparison": {
+      "_note": "对照组 - 描述对照/比较条件", 
+      "_examples": "例如: 安慰剂, 常规治疗, 不干预, 其他干预措施",
+      "_options": "可以是: 安慰剂对照, 阳性对照, 常规护理, 无干预等",
+      "_your_criteria": "请在此填写对照组要求，如无特殊要求可填'无限制'",
+      "value": "安慰剂或常规治疗"
+    },
+    
+    "Outcomes": {
+      "_note": "结局指标 - 描述主要和次要结局",
+      "_examples": "例如: 症状改善, 生活质量, 不良事件, 死亡率, 住院率",
+      "_primary_secondary": "包括主要结局和重要的次要结局",
+      "_your_criteria": "请在此填写您关注的结局指标",
+      "value": "主要和次要临床结局"
+    },
+    
+    "Additional": {
+      "_note": "其他纳入标准 - 语言、发表类型、时间等限制",
+      "_examples": "例如: 英文发表, 2010年后发表, 同行评议期刊",
+      "_time_limit": "考虑发表时间限制、语言限制等",
+      "_your_criteria": "请在此填写其他要求，如无可填'无'",
+      "value": "英文发表，同行评议期刊"
+    }
+  },
+  
+  "exclusion_criteria": {
+    "_comment": "=== PICOS排除标准 - 明确不纳入的研究类型和条件 ===",
+    "_purpose_note": "排除标准与纳入标准相对应，明确排除不符合研究目的的文献",
+    
+    "Study design": {
+      "_note": "排除的研究设计",
+      "_examples": "例如: 病例报告, 综述文章, 会议摘要",
+      "value": "病例报告、病例系列、综述文章"
+    },
+    
+    "Participants": {
+      "_note": "排除的人群",
+      "_examples": "例如: 儿童患者, 孕妇, 特殊疾病患者",
+      "value": "儿童患者（18岁以下）"
+    },
+    
+    "Intervention": {
+      "_note": "排除的干预措施", 
+      "_examples": "例如: 手术治疗, 特定药物, 非标准治疗",
+      "value": "非标准化干预措施"
+    },
+    
+    "Comparison": {
+      "_note": "排除的对照类型",
+      "_examples": "例如: 历史对照, 自身对照",
+      "value": "无限制"
+    },
+    
+    "Outcomes": {
+      "_note": "排除的结局类型",
+      "_examples": "例如: 仅报告实验室指标, 仅报告中间结局",
+      "value": "无限制"
+    },
+    
+    "Additional": {
+      "_note": "其他排除标准",
+      "_examples": "例如: 非英文发表, 会议摘要, 重复发表",
+      "value": "会议摘要、重复发表、非英文文献"
+    }
+  },
+  
+  "_template_customization_guide": {
+    "_comment": "=== 模板定制指南 ===",
+    "_step1": "1. 路径配置: 修改paths部分的所有文件路径指向您的实际文件",
+    "_step2": "2. 研究设计选择: 根据您的课题在study_designs中选择合适的纳入和排除类型",
+    "_step3": "3. PICOS标准: 详细填写inclusion_criteria和exclusion_criteria中的各项标准",
+    "_step4": "4. API配置: 在llm_configs中填入您的API密钥和选择合适的模型",
+    "_step5": "5. 并行设置: 根据您的硬件配置调整parallel_settings中的筛选器数量",
+    "_step6": "6. 测试运行: 先用小样本测试配置是否正确",
+    "_step7": "7. 正式运行: 使用完整数据集进行文献筛选"
+  },
+  
+  "_common_study_types": {
+    "_comment": "=== 常见课题类型的配置建议 ===",
+    "_intervention_studies": "干预效果研究: 纳入randomized_controlled_trial等实验性研究",
+    "_etiology_studies": "病因学研究: 纳入cohort_study、case_control_study等观察性研究", 
+    "_diagnostic_studies": "诊断准确性研究: 纳入cross_sectional_study、cohort_study",
+    "_prognosis_studies": "预后研究: 纳入cohort_study、longitudinal_study",
+    "_prevalence_studies": "患病率研究: 纳入cross_sectional_study",
+    "_qualitative_synthesis": "定性综合: 纳入interview_study、focus_group_study等定性研究"
+  },
+  
+  "_recommended_configurations": {
+    "_comment": "=== 推荐配置方案 ===",
+    
+    "_deepseek_optimal": {
+      "_name": "DeepSeek性价比最优方案",
+      "_description": "使用DeepSeek模型，成本最低，适合大批量文献筛选",
+      "_estimated_cost": "处理10000篇文献约需$50-100（取决于时间段）",
+      "prompt_llm": {
+        "api_key": "your_deepseek_api_key",
+        "base_url": "https://api.deepseek.com/v1",
+        "model": "deepseek-chat"
+      },
+      "screening_llms": {
+        "LLM_A": {
+          "api_key": "your_deepseek_api_key",
+          "base_url": "https://api.deepseek.com/v1",
+          "model": "deepseek-chat"
+        },
+        "LLM_B": {
+          "api_key": "your_deepseek_api_key",
+          "base_url": "https://api.deepseek.com/v1",
+          "model": "deepseek-reasoner"
+        }
+      },
+      "_tips": "建议在UTC 16:30-00:30运行以享受50%折扣"
+    },
+    
+    "_apiyi_balanced": {
+      "_name": "APIYI第三方平衡方案",
+      "_description": "使用APIYI第三方API，价格适中，模型选择丰富",
+      "_estimated_cost": "处理10000篇文献约需$200-500",
+      "prompt_llm": {
+        "api_key": "your_apiyi_api_key",
+        "base_url": "https://vip.apiyi.com/v1",
+        "model": "gpt-4.1"
+      },
+      "screening_llms": {
+        "LLM_A": {
+          "api_key": "your_apiyi_api_key",
+          "base_url": "https://vip.apiyi.com/v1",
+          "model": "gpt-3.5-turbo"
+        },
+        "LLM_B": {
+          "api_key": "your_apiyi_api_key",
+          "base_url": "https://vip.apiyi.com/v1",
+          "model": "claude-3-sonnet"
+        }
+      }
+    },
+    
+    "_hybrid_premium": {
+      "_name": "混合高质量方案",
+      "_description": "结合DeepSeek和官方API，兼顾成本和质量",
+      "_estimated_cost": "处理10000篇文献约需$150-300",
+      "prompt_llm": {
+        "api_key": "your_openai_api_key",
+        "base_url": "https://api.openai.com/v1",
+        "model": "gpt-4o-mini"
+      },
+      "screening_llms": {
+        "LLM_A": {
+          "api_key": "your_deepseek_api_key",
+          "base_url": "https://api.deepseek.com/v1",
+          "model": "deepseek-chat"
+        },
+        "LLM_B": {
+          "api_key": "your_claude_api_key",
+          "base_url": "https://api.anthropic.com/v1",
+          "model": "claude-3-haiku"
+        }
+      }
+    }
+  },
+  
+  "_cost_optimization_guide": {
+    "_comment": "=== 成本优化指南 ===",
+    "_deepseek_time_discount": "DeepSeek夜间折扣: UTC 16:30-00:30 享受50%折扣",
+    "_batch_processing": "批量处理: 使用并行处理可提高效率，但需注意API限制",
+    "_single_vs_multi": "单模型vs多模型: 预算紧张时可使用单个DeepSeek模型",
+    "_api_key_management": "API密钥管理: 不同提供商可使用不同密钥以分散风险",
+    "_monitoring": "成本监控: 启用cost_analysis功能实时监控API调用成本"
+  }
+}

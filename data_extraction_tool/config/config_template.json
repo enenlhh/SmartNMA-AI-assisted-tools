@@ -1,0 +1,35 @@
+{
+    "extraction_mode": "table or json",
+    "paths": {
+      "input_folder": "/path/to/your/input_documents",
+      "output_folder": "/path/to/your/output_results",
+      "output_filename": "extraction_results.xlsx"
+    },
+    "llm_configs": {
+      "primary": {
+        "api_key": "YOUR_PRIMARY_LLM_API_KEY",
+        "base_url": "https://api.example.com/v1",
+        "model": "gpt-4-turbo", 
+        "temperature": 0.0,
+        "max_tokens": 4000,
+        "timeout": 300,
+        "max_retries": 5
+      },
+      "repair": {
+        "api_key": "YOUR_REPAIR_LLM_API_KEY",
+        "base_url": "https://api.example.com/v1",
+        "model": "gpt-4", 
+        "temperature": 0.0,
+        "max_tokens": 4000,
+        "timeout": 300,
+        "max_retries": 3
+      }
+    },
+    "processing": {
+      "split_length": 100000,
+      "max_workers": 1,
+      "save_interval": 1,
+      "create_debug_files": true,
+      "create_process_files": true
+    }
+  }

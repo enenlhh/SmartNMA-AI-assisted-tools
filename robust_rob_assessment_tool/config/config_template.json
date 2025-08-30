@@ -1,0 +1,119 @@
+{
+  "_comment": "ROB Assessment Tool Configuration Template",
+  "_documentation": {
+    "paths": "File and directory paths for input, output, and temporary files",
+    "processing": "Document processing and analysis settings",
+    "parallel": "Parallel processing configuration for improved performance",
+    "domain6": "Domain 6 assessment thresholds and default values",
+    "rob_framework": "ROB framework type and assessment scope",
+    "cost_tracking": "LLM usage cost tracking and reporting settings",
+    "llm_models": "LLM model configurations for assessment"
+  },
+  "paths": {
+    "_comment": "Configure file and directory paths",
+    "input_folder": "path/to/input/documents",
+    "output_folder": "path/to/output/results",
+    "checkpoint_file": "path/to/checkpoint/file.pkl",
+    "temp_folder": "temp_parallel",
+    "llm_pricing_config": "config/llm_pricing.json"
+  },
+  "processing": {
+    "_comment": "Document processing configuration",
+    "llm_output_mode": "json",
+    "_llm_output_mode_options": ["json", "table"],
+    "eval_optional_items": true,
+    "max_text_length": 25000,
+    "_max_text_length_note": "Maximum text length per document (characters)",
+    "start_index": 0,
+    "_start_index_note": "Starting document index (for partial processing)",
+    "batch_size": 1,
+    "_batch_size_note": "Number of documents per processing batch",
+    "enable_resume": true,
+    "_enable_resume_note": "Enable checkpoint/resume functionality"
+  },
+  "parallel": {
+    "_comment": "Parallel processing configuration for improved performance",
+    "enabled": true,
+    "_enabled_note": "Enable/disable parallel processing",
+    "max_workers": 4,
+    "_max_workers_note": "Maximum number of parallel workers (auto-detected if auto_detect_workers=true)",
+    "max_documents_per_batch": 50,
+    "_max_documents_per_batch_note": "Maximum documents per worker batch",
+    "checkpoint_interval": 10,
+    "_checkpoint_interval_note": "Save checkpoint every N processed documents",
+    "retry_attempts": 3,
+    "_retry_attempts_note": "Number of retry attempts for failed operations",
+    "timeout_seconds": 300,
+    "_timeout_seconds_note": "Timeout for individual document processing (seconds)",
+    "memory_limit_gb": 8.0,
+    "_memory_limit_gb_note": "Memory limit per worker process (GB)",
+    "auto_detect_workers": true,
+    "_auto_detect_workers_note": "Automatically detect optimal number of workers based on system resources"
+  },
+  "domain6": {
+    "_comment": "Domain 6 assessment thresholds and defaults",
+    "thresholds": {
+      "definitely_low": 5,
+      "probably_low": 10,
+      "probably_high": 15,
+      "_note": "Thresholds must be in ascending order"
+    },
+    "default_assessment": "Probably low",
+    "_default_assessment_options": ["Definitely low", "Probably low", "Probably high", "Definitely high"]
+  },
+  "rob_framework": {
+    "_comment": "ROB framework configuration",
+    "type": "rob2",
+    "_type_options": ["rob2", "rob1", "custom"],
+    "core_items": true,
+    "_core_items_note": "Assess core ROB domains",
+    "optional_items": true,
+    "_optional_items_note": "Assess optional ROB domains",
+    "custom_domains": [],
+    "_custom_domains_note": "List of custom domain names for assessment"
+  },
+  "cost_tracking": {
+    "_comment": "LLM usage cost tracking and reporting",
+    "enabled": true,
+    "_enabled_note": "Enable cost tracking and reporting",
+    "currency": "USD",
+    "_currency_options": ["USD", "EUR", "GBP", "CNY", "JPY"],
+    "track_by_model": true,
+    "_track_by_model_note": "Track costs separately for each LLM model",
+    "generate_reports": true,
+    "_generate_reports_note": "Generate detailed cost reports",
+    "cost_alerts": false,
+    "_cost_alerts_note": "Enable cost threshold alerts",
+    "max_cost_threshold": 100.0,
+    "_max_cost_threshold_note": "Maximum cost threshold for alerts (in selected currency)"
+  },
+  "llm_models": [
+    {
+      "_comment": "Primary LLM model configuration",
+      "name": "Primary Model",
+      "_name_note": "Unique identifier for this model",
+      "api_key": "your_api_key_here",
+      "_api_key_note": "API key for accessing the LLM service",
+      "base_url": "https://api.openai.com/v1",
+      "_base_url_note": "Base URL for the LLM API endpoint",
+      "model_name": "gpt-4",
+      "_model_name_note": "Specific model identifier (e.g., gpt-4, claude-3-opus)",
+      "use_streaming": false,
+      "_use_streaming_note": "Enable streaming responses (if supported)",
+      "max_retries": 3,
+      "_max_retries_note": "Maximum retry attempts for failed API calls",
+      "timeout": 60,
+      "_timeout_note": "API call timeout in seconds"
+    },
+    {
+      "_comment": "Secondary LLM model configuration (optional)",
+      "name": "Secondary Model",
+      "api_key": "your_secondary_api_key_here",
+      "base_url": "https://api.anthropic.com/v1",
+      "model_name": "claude-3-sonnet",
+      "use_streaming": false,
+      "max_retries": 3,
+      "timeout": 60
+    }
+  ]
+}

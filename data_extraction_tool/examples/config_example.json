@@ -1,0 +1,67 @@
+{
+  "_comment": "=== SmartEBM数据提取工具 - 配置示例 ===",
+  "_description": "这是一个完整的配置示例，展示了所有可用的配置选项",
+  
+  "mode": {
+    "extraction_mode": "table",
+    "enable_cost_analysis": true,
+    "enable_parallel_processing": true
+  },
+  
+  "paths": {
+    "input_folder": "input",
+    "output_folder": "output", 
+    "output_filename": "extraction_results.xlsx"
+  },
+  
+  "parallel_settings": {
+    "parallel_workers": 3,
+    "auto_distribute": true,
+    "temp_dir": "temp_parallel",
+    "cleanup_temp_files": true,
+    "retry_failed_batches": true,
+    "max_retries": 3
+  },
+  
+  "resource_management": {
+    "api_calls_per_minute_limit": 100,
+    "memory_limit_mb": 2048,
+    "delay_between_workers": 2,
+    "progress_update_interval": 5
+  },
+  
+  "llm_configs": {
+    "primary": {
+      "api_key": "your_api_key_here",
+      "base_url": "https://api.openai.com/v1",
+      "model": "gpt-4o-mini",
+      "temperature": 0.0,
+      "max_tokens": 4000,
+      "timeout": 300,
+      "max_retries": 5
+    },
+    "repair": {
+      "api_key": "your_api_key_here", 
+      "base_url": "https://api.openai.com/v1",
+      "model": "gpt-4o-mini",
+      "temperature": 0.0,
+      "max_tokens": 4000,
+      "timeout": 300,
+      "max_retries": 3
+    }
+  },
+  
+  "processing": {
+    "split_length": 100000,
+    "save_interval": 1,
+    "create_debug_files": false,
+    "create_process_files": false
+  },
+  
+  "cost_control": {
+    "max_budget_usd": 100.0,
+    "warning_threshold_percent": 80,
+    "preferred_currency": "USD",
+    "track_token_usage": true
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "_comment": "=== SmartEBM Data Extraction Tool - English Configuration Template ===",
+  "_description": "Complete configuration template with all available options in English",
+  "_version": "4.0",
+  "_last_updated": "2024-12-26",
+  
+  "mode": {
+    "_comment": "Extraction mode configuration",
+    "_extraction_mode_note": "Choose between 'table' or 'json' extraction mode",
+    "_cost_analysis_note": "Enable cost tracking for LLM API calls",
+    "_parallel_note": "Enable parallel processing for better performance",
+    "extraction_mode": "table",
+    "enable_cost_analysis": true,
+    "enable_parallel_processing": true
+  },
+  
+  "paths": {
+    "_comment": "File and directory paths configuration",
+    "_input_note": "Directory containing documents to be processed (PDF, DOCX, TXT)",
+    "_output_note": "Directory where extraction results will be saved",
+    "_filename_note": "Name of the final output Excel file",
+    "input_folder": "input",
+    "output_folder": "output",
+    "output_filename": "extraction_results.xlsx"
+  },
+  
+  "parallel_settings": {
+    "_comment": "Parallel processing configuration",
+    "_workers_note": "Number of parallel workers: recommend 50%-75% of CPU cores",
+    "_auto_distribute_note": "Automatically distribute documents evenly across workers",
+    "_temp_dir_note": "Temporary directory for storing intermediate processing files",
+    "_cleanup_note": "Automatically delete temporary files after completion",
+    "_retry_note": "Retry mechanism for failed batches and maximum retry attempts",
+    "parallel_workers": 3,
+    "auto_distribute": true,
+    "temp_dir": "temp_parallel",
+    "cleanup_temp_files": true,
+    "retry_failed_batches": true,
+    "max_retries": 3,
+    "state_file": "extraction_state.json"
+  },
+  
+  "resource_management": {
+    "_comment": "Resource management configuration",
+    "_api_limit_note": "API call rate limit: maximum calls per minute",
+    "_memory_note": "Memory limit per worker in MB",
+    "_timing_note": "Time intervals: worker startup delay and progress update frequency (seconds)",
+    "api_calls_per_minute_limit": 100,
+    "memory_limit_mb": 2048,
+    "delay_between_workers": 2,
+    "progress_update_interval": 5
+  },
+  
+  "output_settings": {
+    "_comment": "Output configuration settings",
+    "_prefix_note": "Final output file prefix for merged results",
+    "_backup_note": "Keep individual worker result files as backup",
+    "_organize_note": "Organize output files by date in structured directories",
+    "final_output_prefix": "final_extraction_results",
+    "backup_individual_results": true,
+    "organize_by_date": true
+  },
+  
+  "llm_configs": {
+    "_comment": "Large Language Model API configurations",
+    "_primary_note": "Primary LLM for data extraction tasks",
+    "_repair_note": "Secondary LLM for data validation and repair tasks",
+    "primary": {
+      "_api_key_note": "Your OpenAI API key or compatible LLM service key",
+      "_base_url_note": "API endpoint URL (use OpenAI's for GPT models)",
+      "_model_note": "Model name: gpt-4o-mini (cost-effective) or gpt-4 (higher quality)",
+      "_temperature_note": "Creativity level: 0.0 for consistent results, higher for variation",
+      "_tokens_note": "Maximum tokens per request (affects cost and response length)",
+      "_timeout_note": "Request timeout in seconds",
+      "_retries_note": "Maximum retry attempts for failed API calls",
+      "api_key": "your_openai_api_key_here",
+      "base_url": "https://api.openai.com/v1",
+      "model": "gpt-4o-mini",
+      "temperature": 0.0,
+      "max_tokens": 4000,
+      "timeout": 300,
+      "max_retries": 5
+    },
+    "repair": {
+      "_api_key_note": "API key for repair/validation LLM (can be same as primary)",
+      "_model_note": "Model for data repair: can use same or different model",
+      "api_key": "your_openai_api_key_here",
+      "base_url": "https://api.openai.com/v1",
+      "model": "gpt-4o-mini",
+      "temperature": 0.0,
+      "max_tokens": 4000,
+      "timeout": 300,
+      "max_retries": 3
+    }
+  },
+  
+  "processing": {
+    "_comment": "Document processing configuration",
+    "_split_note": "Maximum character length per document chunk for processing",
+    "_interval_note": "Save progress every N documents processed",
+    "_debug_note": "Create debug and processing files for troubleshooting",
+    "split_length": 100000,
+    "save_interval": 1,
+    "create_debug_files": false,
+    "create_process_files": false
+  },
+  
+  "cost_control": {
+    "_comment": "Budget and cost management configuration",
+    "_budget_note": "Maximum budget in USD before stopping extraction",
+    "_warning_note": "Send warning when cost reaches this percentage of budget",
+    "_currency_note": "Preferred currency for cost display (USD or CNY)",
+    "_tracking_note": "Track detailed token usage statistics",
+    "max_budget_usd": 100.0,
+    "warning_threshold_percent": 80,
+    "preferred_currency": "USD",
+    "track_token_usage": true
+  },
+  
+  "_usage_examples": {
+    "_comment": "Usage examples and common configurations",
+    "_quick_start": "For quick testing: set parallel_workers to 1-2, enable debug files",
+    "_production": "For production: set parallel_workers to 4-6, disable debug files",
+    "_budget_conscious": "For budget control: use gpt-4o-mini, set low max_budget_usd",
+    "_high_volume": "For large datasets: increase parallel_workers, memory_limit_mb"
+  },
+  
+  "_troubleshooting": {
+    "_api_errors": "If API errors: check api_key, base_url, and network connection",
+    "_memory_issues": "If memory errors: reduce parallel_workers or increase memory_limit_mb",
+    "_slow_processing": "If too slow: increase parallel_workers (max: CPU cores - 1)",
+    "_cost_concerns": "If costs too high: use gpt-4o-mini model, set lower max_budget_usd"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "_comment": "LLM模型定价配置文件 - 以美元/1M tokens计价，用于数据提取工具成本分析",
+  "_update_date": "2024-12-26",
+  "_exchange_rate_usd_to_cny": 7.25,
+  "_note": "价格基于官方定价，第三方API提供商价格可能不同",
+  
+  "models": {
+    "gpt-4": {
+      "provider": "OpenAI",
+      "input_price_per_1m": 30.0,
+      "output_price_per_1m": 60.0,
+      "currency": "USD"
+    },
+    "gpt-4-turbo": {
+      "provider": "OpenAI", 
+      "input_price_per_1m": 10.0,
+      "output_price_per_1m": 30.0,
+      "currency": "USD"
+    },
+    "gpt-4o": {
+      "provider": "OpenAI",
+      "input_price_per_1m": 5.0,
+      "output_price_per_1m": 15.0,
+      "currency": "USD"
+    },
+    "gpt-4o-mini": {
+      "provider": "OpenAI",
+      "input_price_per_1m": 0.15,
+      "output_price_per_1m": 0.6,
+      "currency": "USD"
+    },
+    "gpt-3.5-turbo": {
+      "provider": "OpenAI",
+      "input_price_per_1m": 0.5,
+      "output_price_per_1m": 1.5,
+      "currency": "USD"
+    },
+    "claude-3-opus": {
+      "provider": "Anthropic",
+      "input_price_per_1m": 15.0,
+      "output_price_per_1m": 75.0,
+      "currency": "USD"
+    },
+    "claude-3-sonnet": {
+      "provider": "Anthropic",
+      "input_price_per_1m": 3.0,
+      "output_price_per_1m": 15.0,
+      "currency": "USD"
+    },
+    "claude-3-haiku": {
+      "provider": "Anthropic",
+      "input_price_per_1m": 0.25,
+      "output_price_per_1m": 1.25,
+      "currency": "USD"
+    },
+    "claude-3.5-sonnet": {
+      "provider": "Anthropic",
+      "input_price_per_1m": 3.0,
+      "output_price_per_1m": 15.0,
+      "currency": "USD"
+    },
+    "gemini-1.5-pro": {
+      "provider": "Google",
+      "input_price_per_1m": 3.5,
+      "output_price_per_1m": 10.5,
+      "currency": "USD"
+    },
+    "gemini-1.5-flash": {
+      "provider": "Google",
+      "input_price_per_1m": 0.075,
+      "output_price_per_1m": 0.3,
+      "currency": "USD"
+    },
+    "deepseek-chat": {
+      "provider": "DeepSeek",
+      "input_price_per_1m": 0.27,
+      "output_price_per_1m": 1.10,
+      "currency": "USD",
+      "note": "标准价格，缓存未命中"
+    },
+    "deepseek-reasoner": {
+      "provider": "DeepSeek",
+      "input_price_per_1m": 0.55,
+      "output_price_per_1m": 2.19,
+      "currency": "USD",
+      "note": "DeepSeek-R1推理模型"
+    }
+  },
+  
+  "default_fallback": {
+    "input_price_per_1m": 5.0,
+    "output_price_per_1m": 15.0,
+    "currency": "USD",
+    "note": "未知模型的默认定价估算"
+  },
+  
+  "currency_symbols": {
+    "USD": "$",
+    "CNY": "¥"
+  }
+}

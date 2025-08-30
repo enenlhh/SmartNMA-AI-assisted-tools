@@ -1,0 +1,18 @@
+{
+  "test_run_info": {
+    "timestamp": "2025-08-27T15:07:32.867926",
+    "duration": 0.663905143737793,
+    "python_version": "3.12.4 (v3.12.4:8e8a4baf65, Jun  6 2024, 17:33:18) [Clang 13.0.0 (clang-1300.0.29.30)]",
+    "working_directory": "/Users/honghaolai/Documents/Personality researches/MARS-NMA/SmartEBM AI assisted tools v4/robust_rob_assessment_tool",
+    "overall_success": false
+  },
+  "results": {
+    "Complete System Integration": {
+      "tests_run": 15,
+      "failures": 2,
+      "errors": 12,
+      "skipped": 0,
+      "success_rate": 6.666666666666667,
+      "duration": 0.04419994354248047,
+      "failure_details": [
+        

@@ -1,0 +1,58 @@
+{
+  "_comment": "LLM API成本配置文件 - 用于计算全文筛选的API调用成本",
+  "_description": "包含各主要LLM提供商的定价信息，支持USD和CNY两种货币单位",
+  "_last_updated": "2024-08-25",
+  
+  "pricing": {
+    "openai": {
+      "gpt-4.1": {
+        "input_cost_per_1k_tokens": 0.03,
+        "output_cost_per_1k_tokens": 0.06,
+        "currency": "USD"
+      },
+      "gpt-4.1-mini": {
+        "input_cost_per_1k_tokens": 0.00015,
+        "output_cost_per_1k_tokens": 0.0006,
+        "currency": "USD"
+      },
+      "gpt-3.5-turbo": {
+        "input_cost_per_1k_tokens": 0.0005,
+        "output_cost_per_1k_tokens": 0.0015,
+        "currency": "USD"
+      }
+    },
+    "deepseek": {
+      "deepseek-chat": {
+        "input_cost_per_1k_tokens": 0.00014,
+        "output_cost_per_1k_tokens": 0.00028,
+        "currency": "USD"
+      }
+    },
+    "anthropic": {
+      "claude-3-opus": {
+        "input_cost_per_1k_tokens": 0.015,
+        "output_cost_per_1k_tokens": 0.075,
+        "currency": "USD"
+      },
+      "claude-3-sonnet": {
+        "input_cost_per_1k_tokens": 0.003,
+        "output_cost_per_1k_tokens": 0.015,
+        "currency": "USD"
+      }
+    }
+  },
+  
+  "exchange_rates": {
+    "_comment": "汇率信息 - 用于USD到CNY的转换",
+    "USD_to_CNY": 7.2,
+    "last_updated": "2024-08-25"
+  },
+  
+  "cost_categories": {
+    "_comment": "成本分类 - 用于详细的成本分析报告",
+    "prompt_generation": "Prompt生成成本",
+    "document_screening": "文档筛选成本",
+    "result_processing": "结果处理成本",
+    "total_cost": "总成本"
+  }
+}

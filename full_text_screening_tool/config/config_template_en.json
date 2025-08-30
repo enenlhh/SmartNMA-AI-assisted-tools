@@ -1,0 +1,136 @@
+{
+  "_comment_header": "=== SmartEBM Full-Text Screening Tool - English Configuration Template ===",
+  "_description": "This configuration template supports both single-threaded and parallel full-text screening modes for systematic review full-text screening tasks",
+  "_usage_guide": "1. Copy this template as config.json 2. Modify the paths section to point to your files 3. Adjust the number of screeners in parallel_settings 4. Configure API keys 5. Run parallel_run.py or run.py",
+  "_target_users": "Suitable for systematic review researchers, medical researchers, literature management experts",
+  "_quick_start": "1. Modify file paths in paths 2. Adjust parallel_screeners count 3. Configure API keys 4. Run parallel_run.py",
+  
+  "mode": {
+    "_comment": "Runtime mode configuration",
+    "_screening_mode_note": "'single' (single-threaded, suitable for small file debugging) or 'parallel' (parallel processing, recommended for large batches of PDF documents)",
+    "_cost_analysis_note": "Token cost analysis feature: generates detailed API call cost reports",
+    "screening_mode": "parallel",
+    "enable_cost_analysis": true
+  },
+  
+  "paths": {
+    "_comment": "File path configuration",
+    "_input_folder_note": "Input directory: folder containing PDF documents to be screened",
+    "_output_notes": "Output paths: screening results save directory and file names",
+    "_prompt_notes": "Prompt files: main prompt (including PICOS), positive examples, negative examples",
+    "input_folder_path": "input/pdfs",
+    "output_excel_path": "output/fulltext_screening_results.xlsx",
+    "output_directory": "output",
+    "prompt_file_path": "input/screening_prompt.txt",
+    "positive_prompt_file_path": "input/positive_examples.txt",
+    "negative_prompt_file_path": "input/negative_examples.txt"
+  },
+  
+  "processing": {
+    "_comment": "Data processing configuration",
+    "_skip_note": "Skip document count: start processing from the Nth document (0=start from beginning, used for resuming interrupted processing)",
+    "skip_documents_count": 0
+  },
+  
+  "parallel_settings": {
+    "_comment": "Parallel screening configuration (only effective when screening_mode=parallel)",
+    "_screeners_note": "Number of parallel screeners: recommended 50%-75% of CPU cores (2-4 recommended for 4-8 core systems)",
+    "_temp_note": "Temporary file management: directory, cleanup settings and state files",
+    "_retry_note": "Retry mechanism: failed batch retry and maximum retry count",
+    "parallel_screeners": 3,
+    "auto_distribute": true,
+    "temp_dir": "temp_parallel",
+    "cleanup_temp_files": true,
+    "retry_failed_batches": true,
+    "max_retries": 3,
+    "state_file": "parallel_fulltext_state.json"
+  },
+  
+  "resource_management": {
+    "_comment": "Resource management configuration",
+    "_api_limit_note": "API call rate limit: maximum calls per minute (to avoid hitting API rate limits)",
+    "_memory_note": "Memory limit: maximum memory usage per screener (MB)",
+    "_timing_note": "Time intervals: screener startup interval and progress update frequency (seconds)",
+    "api_calls_per_minute_limit": 100,
+    "memory_limit_mb": 2048,
+    "delay_between_screeners": 2,
+    "progress_update_interval": 10
+  },
+  
+  "output_settings": {
+    "_comment": "Output settings configuration",
+    "_prefix_note": "Final output file prefix: naming prefix for merged result files",
+    "_backup_note": "Backup individual results: whether to keep individual screener result files",
+    "_report_note": "Detailed report: whether to generate detailed reports with statistics",
+    "_merge_note": "File merging: Excel result file merge settings",
+    "final_output_prefix": "fulltext_final_results",
+    "backup_individual_results": true,
+    "generate_detailed_report": true,
+    "merge_excel_files": true
+  },
+  
+  "document_processing": {
+    "_comment": "Document processing configuration - special processing requirements for PDF documents",
+    "_pages_note": "Maximum page limit: maximum pages to process per document",
+    "_extraction_note": "PDF extraction method: auto (automatic selection), pymupdf (basic extraction), ocr (optical character recognition)",
+    "_cleaning_note": "Text cleaning: remove extra spaces, line breaks, etc.",
+    "max_pages_per_document": 50,
+    "pdf_extraction_method": "auto",
+    "text_cleaning_enabled": true,
+    "extract_images": false,
+    "extract_tables": true
+  },
+  
+  "llm_configs": {
+    "_comment": "Large Language Model configuration - configure LLM model parameters for full-text screening",
+    "prompt_llm": {
+      "_comment": "Prompt generation model - model for generating and optimizing screening prompts (recommend using high-performance models like GPT-4)",
+      "api_key": "YOUR_PROMPT_LLM_API_KEY_HERE",
+      "base_url": "YOUR_API_BASE_URL_HERE",
+      "model": "gpt-4-turbo-preview"
+    },
+    "screening_llms": {
+      "_comment": "Screening model group - multiple LLM models for actual full-text screening, supports multi-model consensus decision making",
+      "LLM_A": {
+        "_comment": "Screener A - first screening model configuration (e.g., OpenAI GPT models)",
+        "api_key": "YOUR_LLM_A_API_KEY_HERE",
+        "base_url": "YOUR_LLM_A_BASE_URL_HERE",
+        "model": "gpt-4-turbo-preview"
+      },
+      "LLM_B": {
+        "_comment": "Screener B - second screening model configuration (e.g., Anthropic Claude models)",
+        "api_key": "YOUR_LLM_B_API_KEY_HERE",
+        "base_url": "YOUR_LLM_B_BASE_URL_HERE",
+        "model": "claude-3-opus-20240229"
+      },
+      "LLM_C": {
+        "_comment": "Screener C - optional third screening model configuration (e.g., other providers like DeepSeek)",
+        "api_key": "YOUR_LLM_C_API_KEY_HERE",
+        "base_url": "YOUR_LLM_C_BASE_URL_HERE",
+        "model": "deepseek-chat"
+      }
+    }
+  },
+  
+  "inclusion_criteria": {
+    "_comment": "Inclusion criteria - full-text inclusion criteria based on PICOS framework, needs to be modified according to specific research questions",
+    "_example_note": "Example below is for a diabetes intervention study - modify according to your research question",
+    "Study design": "Randomized controlled trials (RCTs), controlled clinical trials, quasi-experimental studies",
+    "Participants": "Adult patients (≥18 years) with type 2 diabetes mellitus, both genders, any ethnicity",
+    "Intervention": "Pharmacological interventions for glycemic control (e.g., GLP-1 agonists, SGLT-2 inhibitors, insulin therapy)",
+    "Comparison": "Placebo, no treatment, standard care, or other active antidiabetic medications",
+    "Outcomes": "Primary: HbA1c change from baseline; Secondary: body weight, cardiovascular events, adverse effects",
+    "Additional": "Studies published in English, peer-reviewed journals, human subjects only, minimum 12-week follow-up"
+  },
+  
+  "exclusion_criteria": {
+    "_comment": "Exclusion criteria - clearly excluded study types and conditions, corresponding to inclusion criteria",
+    "_example_note": "Example exclusion criteria - modify according to your research needs",
+    "Study design": "Systematic reviews, meta-analyses, narrative reviews, case reports, case series, editorials, commentaries, conference abstracts",
+    "Participants": "Patients with type 1 diabetes, gestational diabetes, pediatric populations (<18 years), patients with end-stage renal disease",
+    "Intervention": "Non-pharmacological interventions only (diet, exercise), surgical interventions, herbal or traditional medicines",
+    "Comparison": "No specific exclusions for comparison groups",
+    "Outcomes": "Studies not reporting glycemic control outcomes, studies with follow-up <12 weeks",
+    "Additional": "Non-English publications, animal studies, in vitro studies, duplicate publications, studies with insufficient data for analysis"
+  }
+}
