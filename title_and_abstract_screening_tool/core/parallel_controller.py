@@ -14,6 +14,7 @@ from datetime import datetime
 from pathlib import Path
 import traceback
 import shutil
+import threading
 
 # 添加项目路径
 project_root = os.path.dirname(os.path.dirname(__file__))
@@ -296,6 +297,10 @@ class ParallelScreeningManager:
         self.processes = {}
         self.batch_status = {}
         
+        # 输出控制锁
+        self.print_lock = threading.Lock()
+        self.quiet_mode = False  # 安静模式，减少输出
+        
         # 加载配置
         self.load_configurations()
         
@@ -304,6 +309,18 @@ class ParallelScreeningManager:
         
         # 创建临时目录
         self.setup_temp_directory()
+    
+    def safe_print(self, message, force=False):
+        """线程安全的打印方法"""
+        if self.quiet_mode and not force:
+            return
+        
+        with self.print_lock:
+            print(message)
+    
+    def set_quiet_mode(self, quiet=True):
+        """设置安静模式"""
+        self.quiet_mode = quiet
     
     def load_configurations(self):
         """加载统一配置文件"""
@@ -318,7 +335,7 @@ class ParallelScreeningManager:
             # 设置状态文件路径
             self.state_file = self.config['parallel_settings'].get('state_file', 'parallel_screening_state.json')
             
-            print(get_message_fallback("config_loaded"))
+            self.safe_print(get_message_fallback("config_loaded"))
             
         except Exception as e:
             raise Exception(f"Configuration file loading failed: {str(e)}")
@@ -332,10 +349,18 @@ class ParallelScreeningManager:
         
         # 创建临时目录
         os.makedirs(self.temp_dir, exist_ok=True)
-        print(get_message_fallback("temp_prepared", temp_dir=self.temp_dir))
+        self.safe_print(get_message_fallback("temp_prepared", temp_dir=self.temp_dir))
     
+    def print_system_info_brief(self):
+        """打印简化的系统信息"""
+        capacity = self.system_capacity
+        parallel_screeners = self.config['parallel_settings']['parallel_screeners']
+        
+        print(f"🖥️  System: {capacity['cpu_cores']} cores, {capacity['available_memory_gb']:.1f}GB RAM")
+        print(f"⚙️  Configuration: {parallel_screeners} parallel screeners")
+        
     def print_system_info(self):
-        """打印系统信息"""
+        """打印详细系统信息"""
         capacity = self.system_capacity
         
         print("\n" + "="*60)
@@ -465,7 +490,7 @@ class ParallelScreeningManager:
         with open(self.state_file, 'w', encoding='utf-8') as f:
             json.dump(state, f, indent=2, ensure_ascii=False)
         
-        print(f"✓ Session state saved: {session_id}")
+        self.safe_print(f"✓ Session state saved: {session_id}")
         return state
     
     def start_parallel_screening(self):
@@ -473,8 +498,8 @@ class ParallelScreeningManager:
         try:
             print(f"\n{get_message_fallback('starting_new_parallel')}")
             
-            # 1. 打印系统信息
-            self.print_system_info()
+            # 1. 打印系统信息（简化版）
+            self.print_system_info_brief()
             
             # 2. 验证配置
             if not self.validate_configuration():
@@ -521,23 +546,23 @@ class ParallelScreeningManager:
             # 计算分配方案
             parallel_screeners = self.config['parallel_settings']['parallel_screeners']
             
-            # 强制检查：确保使用配置文件中的值，不允许基于记录数的自动调整
-            print(get_message_fallback("debug_screener_count", count=parallel_screeners))
-            if parallel_screeners != self.config['parallel_settings']['parallel_screeners']:
-                print(get_message_fallback("screener_modified_warning"))
-                parallel_screeners = self.config['parallel_settings']['parallel_screeners']
-                print(get_message_fallback("screener_reset_success", count=parallel_screeners))
-            
             distributions = RecordDistributor.calculate_distribution(total_records, parallel_screeners)
             
-            # 显示分配表格
-            RecordDistributor.print_distribution_table(distributions, total_records)
+            # 显示简化的分配信息
+            print(f"\n📋 Distribution: {total_records} records → {parallel_screeners} screeners")
+            for i, dist in enumerate(distributions[:3]):  # 只显示前3个
+                print(f"  Batch {dist['batch_id']}: {dist['record_count']} records")
+            if len(distributions) > 3:
+                print(f"  ... and {len(distributions) - 3} more batches")
             
             # 确认执行
             choice = input(f"\nStart parallel screening? [y/N]: ")
             if choice.lower() != 'y':
                 print(get_message_fallback("execution_cancelled_user"))
                 return False
+            
+            # 启用安静模式，减少后续输出
+            self.set_quiet_mode(True)
             
             # 创建会话状态
             state = self.create_session_state(total_records, distributions)
@@ -607,7 +632,7 @@ class ParallelScreeningManager:
         try:
             self._ensure_config_loaded()
             
-            print("\n📄 Starting XML file splitting...")
+            self.safe_print("\n📄 Starting XML file splitting...")
             
             input_xml_path = self.config['paths']['input_xml_path']
             splitter = XMLSplitter()
@@ -622,7 +647,7 @@ class ParallelScreeningManager:
             # 使用自定义分割逻辑
             self.custom_split_xml(input_xml_path, state['batches'], split_files)
             
-            print(f"✓ XML splitting completed, generated {len(split_files)} files")
+            self.safe_print(f"✓ XML splitting completed, generated {len(split_files)} files")
             return split_files
             
         except Exception as e:
@@ -639,7 +664,7 @@ class ParallelScreeningManager:
             root = tree.getroot()
             records = root.findall('.//record')
             
-            print(f"Total records: {len(records)}")
+            self.safe_print(f"Total records: {len(records)}")
             
             # 按批次分割
             for i, batch in enumerate(batches):
@@ -671,7 +696,9 @@ class ParallelScreeningManager:
                 ET.indent(new_tree, space="  ", level=0)
                 new_tree.write(output_files[i], encoding='utf-8', xml_declaration=True)
                 
-                print(f"  Batch {batch['batch_id']}: {len(batch_records)} records -> {os.path.basename(output_files[i])}")
+                # 只显示前几个批次的详细信息
+                if i < 3 or not self.quiet_mode:
+                    self.safe_print(f"  Batch {batch['batch_id']}: {len(batch_records)} records -> {os.path.basename(output_files[i])}")
             
         except Exception as e:
             raise Exception(f"Custom splitting failed: {str(e)}")
@@ -679,7 +706,7 @@ class ParallelScreeningManager:
     def create_batch_configs(self, state, split_files):
         """为每个批次创建配置文件"""
         try:
-            print("\n⚙️  Creating batch configuration files...")
+            self.safe_print("\n⚙️  Creating batch configuration files...")
             
             batch_configs = []
             

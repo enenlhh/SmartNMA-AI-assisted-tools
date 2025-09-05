@@ -78,13 +78,14 @@ class ProgressMonitor:
         
         current_time = datetime.now()
         
-        # Clear screen and display progress
-        os.system('clear' if os.name == 'posix' else 'cls')
+        # Only clear screen if we're in monitoring mode (not mixed with other outputs)
+        # Use a more gentle update approach
+        print("\n" + "="*80)
+        print("📊 Progress Update - " + current_time.strftime('%H:%M:%S'))
+        print("="*80)
         
-        self._display_header(state, current_time)
-        self._display_batch_progress(state['batches'])
+        self._display_batch_progress_summary(state['batches'])
         self._display_overall_progress(state, current_time)
-        self._display_performance_stats(state, current_time)
         
         self.last_update_time = current_time
     
@@ -107,8 +108,37 @@ class ProgressMonitor:
             print(f"Runtime: Unknown")
         print("=" * 80)
     
+    def _display_batch_progress_summary(self, batches):
+        """Display simplified batch progress summary"""
+        print("📋 Batch Status Summary:")
+        
+        # Count by status
+        status_counts = {'pending': 0, 'running': 0, 'completed': 0, 'failed': 0}
+        running_batches = []
+        
+        for batch in batches:
+            status = batch['status']
+            if status in status_counts:
+                status_counts[status] += 1
+            
+            if status == 'running':
+                progress = self._calculate_accurate_progress(batch)
+                running_batches.append(f"Batch {batch['batch_id']}: {progress}")
+        
+        # Display status summary
+        print(f"  ✅ Completed: {status_counts['completed']}")
+        print(f"  🔄 Running: {status_counts['running']}")
+        print(f"  ⏳ Pending: {status_counts['pending']}")
+        print(f"  ❌ Failed: {status_counts['failed']}")
+        
+        # Show running batch details
+        if running_batches:
+            print("  Running Details:")
+            for batch_info in running_batches:
+                print(f"    {batch_info}")
+    
     def _display_batch_progress(self, batches):
-        """Display batch progress"""
+        """Display detailed batch progress (for full screen mode only)"""
         print("\n📋 Batch Progress Details")
         print("-" * 80)
         
@@ -137,7 +167,7 @@ class ProgressMonitor:
             if status == 'completed':
                 progress = "100%"
             elif status == 'running':
-                progress = self._estimate_batch_progress(batch)
+                progress = self._calculate_accurate_progress(batch)
             else:
                 progress = "0%"
             
@@ -282,16 +312,23 @@ class ProgressMonitor:
         except:
             print(f"\nProgress: [{bar}] {percentage:.1f}%")
     
-    def _estimate_batch_progress(self, batch):
-        """估算单个批次的进度"""
-        # 如果有详细进度信息，使用它
-        if 'current_record' in batch:
-            current = batch['current_record']
-            total = batch['record_count']
+    def _calculate_accurate_progress(self, batch):
+        """计算更准确的批次进度"""
+        # 优先使用实际记录进度
+        if 'current_record' in batch and 'record_count' in batch:
+            current = batch.get('current_record', 0)
+            total = batch.get('record_count', 1)
             progress = (current / total) * 100 if total > 0 else 0
             return f"{progress:.1f}%"
         
-        # 否则基于时间估算
+        # 检查是否有处理进度信息
+        if 'processed_count' in batch and 'record_count' in batch:
+            processed = batch.get('processed_count', 0)
+            total = batch.get('record_count', 1)
+            progress = (processed / total) * 100 if total > 0 else 0
+            return f"{progress:.1f}%"
+        
+        # 基于时间的保守估算（改进版）
         start_time = batch.get('started_at')
         if not start_time:
             return "0%"
@@ -299,14 +336,27 @@ class ProgressMonitor:
         try:
             start_dt = datetime.fromisoformat(start_time.replace('Z', '+00:00'))
             elapsed = datetime.now() - start_dt
+            elapsed_minutes = elapsed.total_seconds() / 60
             
-            # 假设平均每记录30秒（这可以根据实际情况调整）
-            estimated_total_time = batch['record_count'] * 30
-            progress = min(100, (elapsed.total_seconds() / estimated_total_time) * 100)
+            # 基于记录数量的动态估算（每条记录0.5-2分钟）
+            record_count = batch.get('record_count', 1)
+            if record_count <= 10:
+                avg_time_per_record = 1.0  # 小批次处理较快
+            elif record_count <= 50:
+                avg_time_per_record = 1.5
+            else:
+                avg_time_per_record = 2.0  # 大批次可能较慢
+            
+            estimated_total_minutes = record_count * avg_time_per_record
+            progress = min(95, (elapsed_minutes / estimated_total_minutes) * 100)  # 最多显示95%
             
             return f"~{progress:.0f}%"
-        except:
+        except Exception as e:
             return "运行中"
+    
+    def _estimate_batch_progress(self, batch):
+        """估算单个批次的进度（保持向后兼容）"""
+        return self._calculate_accurate_progress(batch)
     
     def _estimate_remaining_time(self, state, current_time):
         """估算剩余时间"""

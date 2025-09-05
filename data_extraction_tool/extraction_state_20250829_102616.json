@@ -1,9 +1,0 @@
-{
-  "timestamp": "2025-08-29T10:26:16.080002",
-  "total_documents": 3,
-  "total_batches": 3,
-  "completed_batches": 0,
-  "failed_batches": [],
-  "temp_dir": "temp_parallel_20250829_102616",
-  "status": "running"
-}

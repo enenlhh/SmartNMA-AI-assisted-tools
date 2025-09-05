@@ -27,6 +27,7 @@ sys.path.insert(0, os.path.join(project_root, 'tools'))
 
 from parallel_controller import ParallelScreeningManager
 from progress_monitor import ProgressMonitor, monitor_screening_progress
+from simple_progress_monitor import start_simple_monitoring
 from result_merger import merge_results_from_state
 from i18n.i18n_manager import get_language_manager, get_message, select_language
 
@@ -270,8 +271,8 @@ def run_cleanup():
         return False
 
 
-def run_with_monitor(task_func, state_file_pattern="parallel_screening_state.json", update_interval=5):
-    """Run task with monitoring"""
+def run_with_monitor(task_func, state_file_pattern="parallel_screening_state.json", update_interval=10):
+    """Run task with simplified monitoring"""
     
     def monitor_thread():
         """Monitor thread"""
@@ -287,7 +288,14 @@ def run_with_monitor(task_func, state_file_pattern="parallel_screening_state.jso
         
         if os.path.exists(state_file_pattern):
             try:
-                monitor_screening_progress(state_file_pattern, update_interval)
+                # Use simplified monitoring to reduce output noise
+                monitor = start_simple_monitoring(state_file_pattern, update_interval)
+                
+                # Keep monitoring until task completes
+                while True:
+                    time.sleep(5)
+                    if not monitor.is_monitoring:
+                        break
             except:
                 pass  # Monitoring failure doesn't affect main task
     
