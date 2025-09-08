@@ -567,7 +567,7 @@ write.csv(your_data, "outcome-original_data.csv")
 
 在您的研究中使用此工具时，请引用：
 
-> Lai H, Liu J, Ma N, et al. Design and Validation of SmartNMA: A Comprehensive Large Language Model-Assisted Framework for Network Meta-Analysis. (Manuscript in preparation).
+> Lai H, Liu J, Ma N, et al. Development and Validation of SmartNMA: An Intelligent Agent for Interventional Systematic Reviews and Network Meta-Analysis.
 
 ## 支持和联系
 

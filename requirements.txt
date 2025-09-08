@@ -1,0 +1,34 @@
+# Core dependencies for SmartNMA
+numpy>=1.21.0
+pandas>=1.3.0
+scipy>=1.7.0
+
+# LLM and API dependencies
+openai>=1.0.0
+anthropic>=0.3.0
+google-generativeai>=0.3.0
+requests>=2.25.0
+
+# Document processing
+PyPDF2>=3.0.0
+pdfplumber>=0.7.0
+python-docx>=0.8.11
+openpyxl>=3.0.9
+
+# Data processing and analysis
+matplotlib>=3.5.0
+plotly>=5.0.0
+networkx>=2.6.0
+
+# Statistical analysis (R integration)
+rpy2>=3.4.0
+
+# Configuration and utilities
+pyyaml>=6.0
+tqdm>=4.62.0
+
+# Web interface (for data analysis tool)
+streamlit>=1.20.0
+
+# Note: Each module may have its own requirements.txt file
+# Install module-specific dependencies as needed

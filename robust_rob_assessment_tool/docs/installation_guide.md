@@ -84,8 +84,8 @@ If Python is not installed or version is below 3.8, install it first:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 
 # 2. Create virtual environment
 python -m venv rob_env
@@ -107,9 +107,9 @@ python main.py --version
 
 ```bash
 # 1. Download source code
-wget https://github.com/smartebm/robust-rob-assessment-tool/archive/main.zip
+wget https://github.com/enenlhh/SmartNMA-AI-assisted-tools/archive/main.zip
 unzip main.zip
-cd robust-rob-assessment-tool-main
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool-main
 
 # 2. Create virtual environment
 python -m venv rob_env
@@ -133,8 +133,8 @@ python main.py --version
 
 ```bash
 # 1. Clone with development branch
-git clone -b develop https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone -b develop https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 
 # 2. Create development environment
 python -m venv rob_dev_env
@@ -170,8 +170,8 @@ pip --version
 # Open PowerShell or Command Prompt as Administrator (if needed)
 
 # 1. Clone repository
-git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 
 # 2. Create virtual environment
 python -m venv rob_env
@@ -221,8 +221,8 @@ xcode-select --install
 #### Installation Steps
 ```bash
 # 1. Clone repository
-git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 
 # 2. Create virtual environment
 python3 -m venv rob_env
@@ -266,8 +266,8 @@ sudo apt install python3 python3-pip python3-venv python3-dev
 sudo apt install build-essential git
 
 # Clone and install
-git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 
 python3 -m venv rob_env
 source rob_env/bin/activate
@@ -288,8 +288,8 @@ sudo dnf install python3 python3-pip python3-devel gcc git
 sudo dnf install python3 python3-pip python3-devel gcc git
 
 # Continue with standard installation
-git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 
 python3 -m venv rob_env
 source rob_env/bin/activate
@@ -305,8 +305,8 @@ python main.py --version
 sudo pacman -S python python-pip git base-devel
 
 # Continue with standard installation
-git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 
 python -m venv rob_env
 source rob_env/bin/activate
@@ -588,8 +588,8 @@ conda install pandas openpyxl matplotlib seaborn requests
 pip install python-docx PyPDF2
 
 # Clone and test
-git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 python main.py --version
 ```
 
@@ -601,7 +601,7 @@ sudo pip install -r requirements.txt
 
 # Better alternative: use pipx for isolated installation
 pip install pipx
-pipx install git+https://github.com/smartebm/robust-rob-assessment-tool.git
+pipx install git+https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
 ```
 
 ### Offline Installation

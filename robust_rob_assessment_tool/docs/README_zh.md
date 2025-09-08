@@ -107,8 +107,8 @@ ROBUST-RCT（使用结构化思维的偏倚风险评估-随机对照试验）框
 
 1. **克隆代码库**
    ```bash
-   git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-   cd robust-rob-assessment-tool
+   git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+   cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
    ```
 
 2. **创建虚拟环境**（推荐）
@@ -728,15 +728,15 @@ merge     # 合并批次结果
 ```bibtex
 @software{smartebm_rob_tool_2024,
   title={SmartEBM ROB Assessment Tool v2.0},
-  author={Lai, Haoran and Liu, Jing and Ma, Ning and SmartEBM Team},
+  author={Lai, Haoran and Liu, Jing and Ma, Ning and SmartEBM Group at Lanzhou University},
   year={2024},
-  url={https://github.com/smartebm/robust-rob-assessment-tool},
+  url={https://github.com/enenlhh/SmartNMA-AI-assisted-tools},
   version={2.0}
 }
 ```
 
 **相关出版物：**
-> Lai H, Liu J, Ma N, et al. Design and Validation of SmartNMA: A Comprehensive Large Language Model-Assisted Framework for Network Meta-Analysis. (Manuscript in preparation).
+> Lai H, Liu J, Ma N, et al. Development and Validation of SmartNMA: An Intelligent Agent for Interventional Systematic Reviews and Network Meta-Analysis.
 
 ### 12.3 致谢
 - 兰州大学SmartEBM团队
@@ -746,7 +746,6 @@ merge     # 合并批次结果
 ---
 
 **联系信息：**
-- 邮箱：contact@smartebm.org
-- 网站：https://smartebm.org
-- GitHub：https://github.com/smartebm
-- 文档：https://docs.smartebm.org
+- 邮箱：enenlhh@outlook.com
+- GitHub：https://github.com/enenlhh/SmartNMA-AI-assisted-tools
+- 团队：SmartEBM Group at Lanzhou University

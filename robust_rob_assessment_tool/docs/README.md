@@ -118,8 +118,8 @@ This modular design allows for a flexible and powerful end-to-end solution for e
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-   cd robust-rob-assessment-tool
+   git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+   cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
    ```
 
 2. **Create Virtual Environment** (Recommended)
@@ -739,18 +739,18 @@ If you use this tool in your research, please cite:
 ```bibtex
 @software{smartebm_rob_tool_2024,
   title={SmartEBM ROB Assessment Tool v2.0},
-  author={Lai, Haoran and Liu, Jing and Ma, Ning and SmartEBM Team},
+  author={Lai, Haoran and Liu, Jing and Ma, Ning and SmartEBM Group at Lanzhou University},
   year={2024},
-  url={https://github.com/smartebm/robust-rob-assessment-tool},
+  url={https://github.com/enenlhh/SmartNMA-AI-assisted-tools},
   version={2.0}
 }
 ```
 
 **Related Publications:**
-> Lai H, Liu J, Ma N, et al. Design and Validation of SmartNMA: A Comprehensive Large Language Model-Assisted Framework for Network Meta-Analysis. (Manuscript in preparation).
+> Lai H, Liu J, Ma N, et al. Development and Validation of SmartNMA: An Intelligent Agent for Interventional Systematic Reviews and Network Meta-Analysis.
 
 ### 12.3 Acknowledgments
-- SmartEBM Team at Lanzhou University
+- SmartEBM Group at Lanzhou University at Lanzhou University
 - Contributors and beta testers
 - Open source community for dependencies and tools
 

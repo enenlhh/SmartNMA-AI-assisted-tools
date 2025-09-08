@@ -73,8 +73,8 @@
 
 1.  克隆或下载本仓库：
     ```bash
-    git clone https://github.com/your-username/your-project-name.git
-    cd your-project-name
+    git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+    cd SmartNMA-AI-assisted-tools/data_analysis_tool
     ```
 
 2.  安装所需的 R 包。在项目目录中打开一个终端，并运行：

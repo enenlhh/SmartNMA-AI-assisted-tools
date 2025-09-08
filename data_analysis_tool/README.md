@@ -2,7 +2,7 @@
 
 ### No-Code Network Meta-Analysis with Perfect Agreement Validation
 
-This project is developed and maintained by the **SmartEBM (Smart Evidence-Based Medicine) team** at Lanzhou University. Our team specializes in designing **intelligent agents** that embed sophisticated, human-like reasoning workflows into the evidence synthesis process.
+This project is developed and maintained by the **SmartEBM Group at Lanzhou University**. Our team specializes in designing **intelligent agents** that embed sophisticated, human-like reasoning workflows into the evidence synthesis process.
 
 ## Key Advantages
 
@@ -60,4 +60,10 @@ This tool seamlessly integrates with the complete SmartEBM systematic review wor
 
 ## 引用 / Citation
 
-> Lai H, Liu J, Ma N, et al. Design and Validation of SmartNMA: A Comprehensive Large Language Model-Assisted Framework for Network Meta-Analysis. (Manuscript in preparation).
+> Lai H, Liu J, Busse J, et,al. Development and Validation of SmartNMA: An Intelligent Agent for Interventional Systematic Reviews and Network Meta-Analysis
+
+## Repository
+
+- **GitHub**: https://github.com/enenlhh/SmartNMA-AI-assisted-tools
+- **Contact**: enenlhh@outlook.com
+- **Team**: SmartEBM Group at Lanzhou University

@@ -567,11 +567,17 @@ write.csv(your_data, "outcome-original_data.csv")
 
 When using this tool in your research, please cite:
 
-> Lai H, Liu J, Ma N, et al. Design and Validation of SmartNMA: A Comprehensive Large Language Model-Assisted Framework for Network Meta-Analysis. (Manuscript in preparation).
+> Lai H, Liu J, Busse J, et,al. Development and Validation of SmartNMA: An Intelligent Agent for Interventional Systematic Reviews and Network Meta-Analysis
+
+## Repository
+
+- **GitHub**: https://github.com/enenlhh/SmartNMA-AI-assisted-tools
+- **Contact**: enenlhh@outlook.com
+- **Team**: SmartEBM Group at Lanzhou University
 
 ## Support and Contact
 
-For technical support, feature requests, or collaboration opportunities, please contact the SmartEBM team at Lanzhou University.
+For technical support, feature requests, or collaboration opportunities, please contact the SmartEBM Group at Lanzhou University.
 
 ---
 

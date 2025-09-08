@@ -70,7 +70,13 @@ This tool seamlessly integrates with the complete SmartEBM systematic review wor
 
 If you use this tool in your research, please cite the SmartNMA framework:
 
-> Lai H, Liu J, Ma N, et al. Design and Validation of SmartNMA: A Comprehensive Large Language Model-Assisted Framework for Network Meta-Analysis. (Manuscript in preparation).
+> Lai H, Liu J, Busse J, et,al. Development and Validation of SmartNMA: An Intelligent Agent for Interventional Systematic Reviews and Network Meta-Analysis
+
+## Repository
+
+- **GitHub**: https://github.com/enenlhh/SmartNMA-AI-assisted-tools
+- **Contact**: enenlhh@outlook.com
+- **Team**: SmartEBM Group at Lanzhou University
 
 ---
 

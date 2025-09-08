@@ -19,8 +19,8 @@ This document provides comprehensive usage examples for the ROB Assessment Tool 
 
 ```bash
 # 1. Clone and setup
-git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 python -m venv rob_env
 source rob_env/bin/activate  # On Windows: rob_env\Scripts\activate
 pip install -r requirements.txt

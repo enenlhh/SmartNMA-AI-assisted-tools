@@ -830,7 +830,7 @@ python --version > python_version.txt
 
 ### Support Channels
 
-1. **GitHub Issues**: https://github.com/smartebm/robust-rob-assessment-tool/issues
+1. **GitHub Issues**: https://github.com/enenlhh/SmartNMA-AI-assisted-tools/issues
    - Best for: Bug reports, feature requests
    - Include: System info, configuration, error logs
 
@@ -900,8 +900,8 @@ python -c "import sys; print('Python path:', sys.path)"
 
 # 4. Reinstall from scratch
 rm -rf rob_env
-git clone https://github.com/smartebm/robust-rob-assessment-tool.git
-cd robust-rob-assessment-tool
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/robust_rob_assessment_tool
 python -m venv rob_env
 source rob_env/bin/activate
 pip install -r requirements.txt

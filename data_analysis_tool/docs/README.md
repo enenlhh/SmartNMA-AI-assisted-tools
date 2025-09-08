@@ -52,8 +52,8 @@ The tool automatically installs required packages including:
 
 ### Step 2: Clone the Repository
 ```bash
-git clone https://github.com/smartebm/data-analysis-agent.git
-cd data-analysis-agent
+git clone https://github.com/enenlhh/SmartNMA-AI-assisted-tools.git
+cd SmartNMA-AI-assisted-tools/data_analysis_tool
 ```
 
 ### Step 3: Install R Dependencies
@@ -430,7 +430,7 @@ pip install flask pandas openpyxl
 - **Documentation**: Complete guides in `docs/` folder
 - **Templates**: Example files in `data_templates/` folder
 - **Issue Tracking**: GitHub repository for bug reports
-- **Community**: SmartEBM team contact information
+- **Community**: SmartEBM Group at Lanzhou University contact information
 
 ## 10. Technical Architecture
 
@@ -605,6 +605,6 @@ analyzer.process_directory("input_data/", "output_results/")
 
 ## Citation
 
-This tool is a direct output of the research conducted by the SmartEBM team. If you use it in your academic work, we kindly ask that you cite our manuscript, which details the design and validation of the broader framework this module is part of:
+This tool is a direct output of the research conducted by the SmartEBM Group at Lanzhou University. If you use it in your academic work, we kindly ask that you cite our manuscript, which details the design and validation of the broader framework this module is part of:
 
-> Lai H, Liu J, Ma N, et al. Design and Validation of SmartNMA: A Comprehensive Large Language Model-Assisted Framework for Network Meta-Analysis. (Manuscript in preparation).
+> Lai H, Liu J, Ma N, et al. Development and Validation of SmartNMA: An Intelligent Agent for Interventional Systematic Reviews and Network Meta-Analysis.
