@@ -4,7 +4,7 @@
 
 ## Overview
 
-SmartNMA is a comprehensive LLM-driven intelligent agent engineered to automate and enhance the production of systematic reviews and network meta-analyses (NMAs). Developed by the **SmartEBM Group at Lanzhou University**, SmartNMA addresses key limitations in evidence synthesis through adaptive mechanisms that enhance transparency, efficiency, and reliability.
+SmartNMA is a comprehensive LLM-driven intelligent agent engineered to automate and enhance the production of systematic reviews and network meta-analyses (NMAs).
 
 ### Key Features
 
@@ -143,14 +143,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Lead Developers:**
 - Honghao Lai (enenlhh@outlook.com) - Technical Lead & Architecture
-- Long Ge - Project Supervisor & Methodology
-
-**Funding:**
-- Fundamental Research Funds for Central Universities of Lanzhou University (lzujbky-2024-oy11)
-- Traditional Chinese Medicine Innovation Team and Talent Support Program (ZYYCXTD-D-202401)
-
----
-
-**SmartNMA** - Advancing Evidence-Based Medicine through Intelligent Automation
-
-*Developed by the SmartEBM Group at Lanzhou University*
